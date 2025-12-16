@@ -1,0 +1,291 @@
+{
+    "cities": {
+      "coventry": {
+        "country": "UK",
+        "imageUrl": "coventry.jpg",
+        "name": "Coventry",
+        "popularAttractions": [
+          "Coventry Cathedral",
+          "Transport Museum"
+        ]
+      },
+      "edinburgh": {
+        "country": "UK",
+        "imageUrl": "edinburgh.jpg",
+        "name": "Edinburgh",
+        "popularAttractions": [
+          "Edinburgh Castle",
+          "Royal Mile"
+        ]
+      },
+      "liverpool": {
+        "country": "UK",
+        "imageUrl": "liverpool.jpg",
+        "name": "Liverpool",
+        "popularAttractions": [
+          "The Beatles Story",
+          "Albert Dock"
+        ]
+      },
+      "london": {
+        "country": "UK",
+        "imageUrl": "london.jpg",
+        "name": "London",
+        "popularAttractions": [
+          "Big Ben",
+          "Tower Bridge"
+        ]
+      },
+      "manchester": {
+        "country": "UK",
+        "imageUrl": "manchester.jpg",
+        "name": "Manchester",
+        "popularAttractions": [
+          "Old Trafford",
+          "Science Museum"
+        ]
+      }
+    },
+    "deals": {
+      "deal_001": {
+        "activeAfter18": true,
+        "availableRooms": 5,
+        "category": "Luxury",
+        "date": "2024-07-15",
+        "discountPercent": 20,
+        "finalPrice": 200,
+        "hotelId": "coventry_grand"
+      },
+      "deal_002": {
+        "activeAfter18": false,
+        "availableRooms": 10,
+        "category": "Business",
+        "date": "2024-08-01",
+        "discountPercent": 15,
+        "finalPrice": 153,
+        "hotelId": "london_palace"
+      },
+      "deal_003": {
+        "activeAfter18": false,
+        "availableRooms": 8,
+        "category": "Budget",
+        "date": "2024-09-10",
+        "discountPercent": 10,
+        "finalPrice": 108,
+        "hotelId": "manchester_inn"
+      },
+      "deal_004": {
+        "activeAfter18": true,
+        "availableRooms": 6,
+        "category": "Luxury",
+        "date": "2024-07-20",
+        "discountPercent": 25,
+        "finalPrice": 150,
+        "hotelId": "birmingham_resort"
+      },
+      "deal_005": {
+        "activeAfter18": true,
+        "availableRooms": 4,
+        "category": "Luxury",
+        "date": "2024-12-01",
+        "discountPercent": 30,
+        "finalPrice": 210,
+        "hotelId": "edinburgh_castle_view"
+      },
+      "deal_006": {
+        "activeAfter18": false,
+        "availableRooms": 7,
+        "category": "Business",
+        "date": "2024-10-05",
+        "discountPercent": 12,
+        "finalPrice": 141,
+        "hotelId": "glasgow_riverside"
+      },
+      "deal_007": {
+        "activeAfter18": false,
+        "availableRooms": 9,
+        "category": "Budget",
+        "date": "2024-11-15",
+        "discountPercent": 18,
+        "finalPrice": 115,
+        "hotelId": "oxford_suites"
+      },
+      "deal_008": {
+        "activeAfter18": true,
+        "availableRooms": 5,
+        "category": "Business",
+        "date": "2024-07-25",
+        "discountPercent": 20,
+        "finalPrice": 152,
+        "hotelId": "cambridge_gardens"
+      },
+      "deal_009": {
+        "activeAfter18": false,
+        "availableRooms": 6,
+        "category": "Budget",
+        "date": "2024-08-18",
+        "discountPercent": 15,
+        "finalPrice": 110,
+        "hotelId": "york_minster_inn"
+      },
+      "deal_010": {
+        "activeAfter18": true,
+        "availableRooms": 8,
+        "category": "Business",
+        "date": "2024-09-30",
+        "discountPercent": 20,
+        "finalPrice": 136,
+        "hotelId": "liverpool_docks"
+      }
+    },
+    "hotels": {
+      "birmingham_resort": {
+        "basePrice": 200,
+        "city": "Birmingham",
+        "district": "Central",
+        "features": [
+          "Spa",
+          "Gym",
+          "Pool"
+        ],
+        "name": "Birmingham Resort",
+        "photoUrls": [
+          "b1.jpg"
+        ],
+        "stars": 4
+      },
+      "cambridge_gardens": {
+        "basePrice": 190,
+        "city": "Cambridge",
+        "district": "University Quarter",
+        "features": [
+          "Garden View",
+          "Restaurant",
+          "Free WiFi"
+        ],
+        "name": "Cambridge Gardens Hotel",
+        "photoUrls": [
+          "c2.jpg"
+        ],
+        "stars": 4
+      },
+      "coventry_grand": {
+        "basePrice": 250,
+        "city": "Coventry",
+        "district": "Central",
+        "features": [
+          "Free WiFi",
+          "Swimming Pool",
+          "Spa",
+          "Gym"
+        ],
+        "name": "Coventry Grand Hotel",
+        "photoUrls": [
+          "c1.jpg"
+        ],
+        "stars": 5
+      },
+      "edinburgh_castle_view": {
+        "basePrice": 300,
+        "city": "Edinburgh",
+        "district": "Old Town",
+        "features": [
+          "Free WiFi",
+          "Restaurant",
+          "Historic View"
+        ],
+        "name": "Edinburgh Castle View",
+        "photoUrls": [
+          "e1.jpg"
+        ],
+        "stars": 5
+      },
+      "glasgow_riverside": {
+        "basePrice": 160,
+        "city": "Glasgow",
+        "district": "Riverfront",
+        "features": [
+          "Gym",
+          "Bar",
+          "Conference Rooms"
+        ],
+        "name": "Glasgow Riverside Hotel",
+        "photoUrls": [
+          "g1.jpg"
+        ],
+        "stars": 4
+      },
+      "liverpool_docks": {
+        "basePrice": 170,
+        "city": "Liverpool",
+        "district": "Docklands",
+        "features": [
+          "Bar",
+          "Gym",
+          "Free WiFi"
+        ],
+        "name": "Liverpool Docks Hotel",
+        "photoUrls": [
+          "l2.jpg"
+        ],
+        "stars": 4
+      },
+      "london_palace": {
+        "basePrice": 180,
+        "city": "London",
+        "district": "Westminster",
+        "features": [
+          "Free WiFi",
+          "Restaurant",
+          "Bar"
+        ],
+        "name": "London Palace",
+        "photoUrls": [
+          "l1.jpg"
+        ],
+        "stars": 4
+      },
+      "manchester_inn": {
+        "basePrice": 120,
+        "city": "Manchester",
+        "district": "Northern Quarter",
+        "features": [
+          "Breakfast Included",
+          "Free WiFi"
+        ],
+        "name": "Manchester Inn",
+        "photoUrls": [
+          "m1.jpg"
+        ],
+        "stars": 3
+      },
+      "oxford_suites": {
+        "basePrice": 140,
+        "city": "Oxford",
+        "district": "City Centre",
+        "features": [
+          "Breakfast Included",
+          "Free WiFi"
+        ],
+        "name": "Oxford Suites",
+        "photoUrls": [
+          "o1.jpg"
+        ],
+        "stars": 3
+      },
+      "york_minster_inn": {
+        "basePrice": 130,
+        "city": "York",
+        "district": "Historic Centre",
+        "features": [
+          "Historic View",
+          "Breakfast Included"
+        ],
+        "name": "York Minster Inn",
+        "photoUrls": [
+          "y1.jpg"
+        ],
+        "stars": 3
+      }
+    }
+  }

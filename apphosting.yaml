@@ -1,0 +1,10 @@
+# apphosting.yaml
+runtime: nodejs20
+env:
+  - variable: FIREBASE_CONFIG
+    availability:
+      - BUILD
+      - RUNTIME
+  - variable: FIREBASE_WEBAPP_CONFIG
+    availability:
+      - BUILD
