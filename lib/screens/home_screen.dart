@@ -2,18 +2,48 @@ import 'package:flutter/material.dart';
 import 'package:mylob_app/screens/hero_screen.dart';
 import 'package:mylob_app/widgets/footer.dart';
 import 'package:mylob_app/widgets/hotel_widget/build_info_card.dart';
-import 'package:mylob_app/widgets/skeletons/carousel_skeleton.dart';
+import 'package:mylob_app/widgets/city_widget/city_card.dart';
+import 'package:mylob_app/widgets/skeletons/hotel_carousel.dart';
 import 'package:mylob_app/widgets/skeletons/more_destination.dart';
 import 'package:mylob_app/widgets/skeletons/now_playing_skeleton.dart';
-// ignore: unused_import
-import 'package:mylob_app/widgets/responsive.dart';
+import 'package:mylob_app/services/hotel_service.dart';
+import 'package:mylob_app/services/deal_service.dart';
+import 'package:mylob_app/services/city_service.dart';
 
-class HomeScreen extends StatelessWidget {
+class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
 
   @override
+  State<HomeScreen> createState() => _HomeScreenState();
+}
+
+class _HomeScreenState extends State<HomeScreen> {
+  List<Map<String, dynamic>> hotels = [];
+  List<Map<String, dynamic>> deals = [];
+  List<Map<String, dynamic>> cities = [];
+  bool isLoading = true;
+
+  @override
+  void initState() {
+    super.initState();
+    _fetchData();
+  }
+
+  Future<void> _fetchData() async {
+    final fetchedHotels = await HotelService.fetchHotels();
+    final fetchedDeals = await DealService.fetchDealsByHotel('hotelId');
+    final fetchedCities = await CityService.fetchCitiesFirestore();
+
+    setState(() {
+      hotels = fetchedHotels;
+      deals = fetchedDeals;
+      cities = fetchedCities;
+      isLoading = false;
+    });
+  }
+
+  @override
   Widget build(BuildContext context) {
-    // ignore: unused_local_variable
     final isWide = MediaQuery.of(context).size.width > 1100;
 
     return Scaffold(
@@ -28,9 +58,9 @@ class HomeScreen extends StatelessWidget {
               const HeroScreen(),
               const SizedBox(height: 32),
 
-              // Why Lobideyim section
+              // Why section
               Text(
-                '!Why MyLob.com?',
+                'Why MyLob.com?',
                 style: Theme.of(context).textTheme.headlineSmall?.copyWith(
                       fontWeight: FontWeight.bold,
                       color: Theme.of(context).colorScheme.primary,
@@ -81,20 +111,48 @@ class HomeScreen extends StatelessWidget {
                   style: Theme.of(context).textTheme.headlineSmall),
               const SizedBox(height: 20),
 
-              Responsive.isDesktop(context)
-                  ? const Row(
+              isWide
+                  ? Row(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Flexible(flex: 2, child: CarouselSkeleton()),
-                        SizedBox(width: 20),
-                        Flexible(flex: 1, child: NowPlayingSkeleton()),
+                        Flexible(
+                          flex: 2,
+                          child: HotelCarousel(
+                            hotels: hotels,
+                            isLoading: isLoading,
+                          ),
+                        ),
+                        const SizedBox(width: 20),
+                        Flexible(
+                          flex: 1,
+                          child: isLoading
+                              ? const NowPlayingSkeleton()
+                              : ListView.builder(
+                                  shrinkWrap: true,
+                                  itemCount: deals.length,
+                                  itemBuilder: (context, index) {
+                                    return Text(deals[index]['title']);
+                                  },
+                                ),
+                        ),
                       ],
                     )
-                  : const Column(
+                  : Column(
                       children: [
-                        CarouselSkeleton(),
-                        SizedBox(height: 20),
-                        NowPlayingSkeleton(),
+                        HotelCarousel(
+                          hotels: hotels,
+                          isLoading: isLoading,
+                        ),
+                        const SizedBox(height: 20),
+                        isLoading
+                            ? const NowPlayingSkeleton()
+                            : ListView.builder(
+                                shrinkWrap: true,
+                                itemCount: deals.length,
+                                itemBuilder: (context, index) {
+                                  return Text(deals[index]['title']);
+                                },
+                              ),
                       ],
                     ),
 
@@ -109,7 +167,22 @@ class HomeScreen extends StatelessWidget {
                     ),
               ),
               const SizedBox(height: 20),
-              const MoreDestinationSkeleton(),
+              isLoading
+                  ? const MoreDestinationSkeleton()
+                  : GridView.builder(
+                      shrinkWrap: true,
+                      physics: const NeverScrollableScrollPhysics(),
+                      gridDelegate:
+                          const SliverGridDelegateWithFixedCrossAxisCount(
+                        crossAxisCount: 3,
+                        childAspectRatio: 0.9,
+                        crossAxisSpacing: 12,
+                        mainAxisSpacing: 12,
+                      ),
+                      itemCount: cities.length,
+                      itemBuilder: (context, index) =>
+                          CityCard(city: cities[index]),
+                    ),
 
               const SizedBox(height: 40),
 

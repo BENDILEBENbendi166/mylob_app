@@ -8,11 +8,12 @@ class DefaultFirebaseOptions {
     switch (defaultTargetPlatform) {
       case TargetPlatform.android:
         return const FirebaseOptions(
-          apiKey: "AIzaSyAY3gwbiFp6BSdGYtmHyhiE2jpwRErTcko",
+          apiKey: "...",
           appId: "1:879373771868:web:fc31d3f6a898562bb97299",
           messagingSenderId: "879373771868",
           projectId: "mylob-ba4b4",
-          databaseURL: "https://mylob-ba4b4-default-rtdb.europe-west1.firebasedatabase.app",
+          databaseURL:
+              "https://mylob-ba4b4-default-rtdb.europe-west1.firebasedatabase.app",
           storageBucket: "mylob-ba4b4.firebasestorage.app",
         );
 
@@ -23,7 +24,8 @@ class DefaultFirebaseOptions {
           appId: "1:879373771868:web:fc31d3f6a898562bb97299",
           messagingSenderId: "879373771868",
           projectId: "mylob-ba4b4",
-          databaseURL: "https://mylob-ba4b4-default-rtdb.europe-west1.firebasedatabase.app",
+          databaseURL:
+              "https://mylob-ba4b4-default-rtdb.europe-west1.firebasedatabase.app",
           storageBucket: "mylob-ba4b4.firebasestorage.app",
           iosClientId: "YOUR_IOS_CLIENT_ID",
           iosBundleId: "YOUR_IOS_BUNDLE_ID",
@@ -33,11 +35,12 @@ class DefaultFirebaseOptions {
       case TargetPlatform.linux:
       case TargetPlatform.fuchsia:
         return const FirebaseOptions(
-          apiKey: "AIzaSyAY3gwbiFp6BSdGYtmHyhiE2jpwRErTcko",
+          apiKey: "...",
           appId: "1:879373771868:web:fc31d3f6a898562bb97299",
           messagingSenderId: "879373771868",
           projectId: "mylob-ba4b4",
-          databaseURL: "https://mylob-ba4b4-default-rtdb.europe-west1.firebasedatabase.app",
+          databaseURL:
+              "https://mylob-ba4b4-default-rtdb.europe-west1.firebasedatabase.app",
           storageBucket: "mylob-ba4b4.firebasestorage.app",
         );
     }

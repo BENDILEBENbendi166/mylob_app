@@ -2,18 +2,16 @@ import 'package:flutter/material.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:skeletonizer/skeletonizer.dart';
 
-
-
-
 class CarouselSkeleton extends StatelessWidget {
-  const CarouselSkeleton({super.key});
+  final int itemCount;
+  const CarouselSkeleton({super.key, this.itemCount = 3});
 
   @override
   Widget build(BuildContext context) {
     return Skeletonizer(
       child: CarouselSlider(
         items: List.generate(
-          6,
+          itemCount,
           (index) => Container(
             margin: const EdgeInsets.symmetric(horizontal: 8),
             decoration: BoxDecoration(
@@ -31,11 +29,11 @@ class CarouselSkeleton extends StatelessWidget {
                 ),
               ],
             ),
-            height: 200, // match HotelCard image height
+            height: MediaQuery.of(context).size.height * 0.25,
           ),
         ),
         options: CarouselOptions(
-          height: 280,
+          height: MediaQuery.of(context).size.height * 0.35,
           autoPlay: true,
           autoPlayCurve: Curves.easeInOut,
           autoPlayAnimationDuration: const Duration(milliseconds: 800),

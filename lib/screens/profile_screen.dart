@@ -16,56 +16,92 @@ class ProfileScreen extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: const Text('My Profile'),
+        centerTitle: true,
       ),
       body: SingleChildScrollView(
         padding: const EdgeInsets.all(16),
         child: Column(
           children: [
-            // Avatar + Name
-            CircleAvatar(
-              radius: 50,
-              backgroundImage: NetworkImage(user['avatarUrl']!),
-            ),
-            const SizedBox(height: 12),
-            Text(
-              user['name']!,
-              style: Theme.of(context).textTheme.headlineSmall,
-            ),
-            Text(
-              user['email']!,
-              style: Theme.of(context).textTheme.bodyMedium,
+            // Profile header
+            Card(
+              elevation: 4,
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(16),
+              ),
+              child: Padding(
+                padding: const EdgeInsets.all(24),
+                child: Column(
+                  children: [
+                    CircleAvatar(
+                      radius: 50,
+                      backgroundImage: NetworkImage(user['avatarUrl']!),
+                    ),
+                    const SizedBox(height: 12),
+                    Text(
+                      user['name']!,
+                      style:
+                          Theme.of(context).textTheme.headlineSmall?.copyWith(
+                                fontWeight: FontWeight.bold,
+                              ),
+                    ),
+                    Text(
+                      user['email']!,
+                      style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                            color: Colors.grey[600],
+                          ),
+                    ),
+                  ],
+                ),
+              ),
             ),
 
             const SizedBox(height: 24),
-            const Divider(),
 
             // Quick links
-            _ProfileAction(
-              icon: Icons.favorite,
-              label: 'Favorites',
-              onTap: () => context.go('/favorites'),
-            ),
-            _ProfileAction(
-              icon: Icons.book_online,
-              label: 'My Bookings',
-              onTap: () => context.go('/reservation'),
-            ),
-            _ProfileAction(
-              icon: Icons.settings,
-              label: 'Settings',
-              onTap: () => context.go('/settings'),
+            Card(
+              elevation: 2,
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(12),
+              ),
+              child: Column(
+                children: [
+                  _ProfileAction(
+                    icon: Icons.favorite,
+                    label: 'Favorites',
+                    onTap: () => context.go('/favorites'),
+                  ),
+                  const Divider(height: 1),
+                  _ProfileAction(
+                    icon: Icons.book_online,
+                    label: 'My Bookings',
+                    onTap: () => context.go('/reservation'),
+                  ),
+                  const Divider(height: 1),
+                  _ProfileAction(
+                    icon: Icons.settings,
+                    label: 'Settings',
+                    onTap: () => context.go('/settings'),
+                  ),
+                ],
+              ),
             ),
 
-            const Divider(),
+            const SizedBox(height: 24),
 
             // Logout
-            _ProfileAction(
-              icon: Icons.logout,
-              label: 'Log Out',
-              onTap: () {
-                // TODO: implement logout logic
-                context.go('/');
-              },
+            Card(
+              elevation: 2,
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(12),
+              ),
+              child: _ProfileAction(
+                icon: Icons.logout,
+                label: 'Log Out',
+                onTap: () {
+                  // TODO: implement logout logic
+                  context.go('/');
+                },
+              ),
             ),
           ],
         ),
@@ -88,9 +124,19 @@ class _ProfileAction extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final isLogout = label.toLowerCase().contains('log out');
     return ListTile(
-      leading: Icon(icon, color: Theme.of(context).colorScheme.primary),
-      title: Text(label),
+      leading: Icon(
+        icon,
+        color: isLogout ? Colors.red : Theme.of(context).colorScheme.primary,
+      ),
+      title: Text(
+        label,
+        style: TextStyle(
+          color: isLogout ? Colors.red : null,
+          fontWeight: isLogout ? FontWeight.bold : FontWeight.normal,
+        ),
+      ),
       trailing: const Icon(Icons.chevron_right),
       onTap: onTap,
     );

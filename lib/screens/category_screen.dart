@@ -1,22 +1,59 @@
 import 'package:flutter/material.dart';
 import 'package:mylob_app/widgets/hotel_widget/hotel_card.dart';
+import 'package:mylob_app/services/hotel_service.dart';
+import 'package:mylob_app/widgets/responsive.dart';
+import 'package:mylob_app/widgets/skeletons/more_destination.dart';
 
-class CategoryScreen extends StatelessWidget {
+class CategoryScreen extends StatefulWidget {
   final String categoryId;
   const CategoryScreen({super.key, required this.categoryId});
-  
-  get responsive => null;
+
+  @override
+  State<CategoryScreen> createState() => _CategoryScreenState();
+}
+
+class _CategoryScreenState extends State<CategoryScreen> {
+  List<Map<String, dynamic>> hotels = [];
+  bool isLoading = true;
+
+  @override
+  void initState() {
+    super.initState();
+    _fetchHotels();
+  }
+
+  Future<void> _fetchHotels() async {
+    final result = await HotelService.fetchHotelsByCity(widget.categoryId);
+    setState(() {
+      hotels = result;
+      isLoading = false;
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
-    final hotels = []; // placeholder
+    if (isLoading) {
+      return const Padding(
+        padding: EdgeInsets.all(16),
+        child: MoreDestinationSkeleton(), // shimmer grid
+      );
+    }
+
+    if (hotels.isEmpty) {
+      return const Center(
+        child: Text(
+          'No hotels found in this category',
+          style: TextStyle(fontSize: 16, fontWeight: FontWeight.w500),
+        ),
+      );
+    }
 
     return GridView.builder(
       padding: const EdgeInsets.all(16),
       gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-        crossAxisCount: responsive.isMobile(context)
+        crossAxisCount: Responsive.isMobile(context)
             ? 1
-            : responsive.isTablet(context)
+            : Responsive.isTablet(context)
                 ? 2
                 : 3,
         childAspectRatio: 0.8,

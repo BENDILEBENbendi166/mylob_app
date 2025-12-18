@@ -1,12 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:skeletonizer/skeletonizer.dart';
 
-
-
-
-
 class MoreDestinationSkeleton extends StatelessWidget {
-  const MoreDestinationSkeleton({super.key});
+  final int itemCount;
+  const MoreDestinationSkeleton({super.key, this.itemCount = 6});
 
   @override
   Widget build(BuildContext context) {
@@ -15,12 +12,12 @@ class MoreDestinationSkeleton extends StatelessWidget {
         shrinkWrap: true,
         physics: const NeverScrollableScrollPhysics(),
         gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-          crossAxisCount: 2, // match your CityCard grid
+          crossAxisCount: 2,
           mainAxisSpacing: 12,
           crossAxisSpacing: 12,
           childAspectRatio: 0.85,
         ),
-        itemCount: 6,
+        itemCount: itemCount,
         itemBuilder: (context, index) => Card(
           elevation: 6,
           shape: RoundedRectangleBorder(
@@ -31,9 +28,10 @@ class MoreDestinationSkeleton extends StatelessWidget {
             children: [
               // Image placeholder
               Container(
-                height: 140,
+                height: MediaQuery.of(context).size.height * 0.18,
                 decoration: BoxDecoration(
-                  borderRadius: const BorderRadius.vertical(top: Radius.circular(16)),
+                  borderRadius:
+                      const BorderRadius.vertical(top: Radius.circular(16)),
                   gradient: LinearGradient(
                     colors: [Colors.grey[300]!, Colors.grey[200]!],
                     begin: Alignment.topLeft,
@@ -66,5 +64,3 @@ class MoreDestinationSkeleton extends StatelessWidget {
     );
   }
 }
-
-

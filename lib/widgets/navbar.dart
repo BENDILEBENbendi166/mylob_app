@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:mylob_app/main.dart';
+
 class CustomNavBar extends StatelessWidget implements PreferredSizeWidget {
   const CustomNavBar({super.key});
 
@@ -56,8 +57,8 @@ class _TopAction extends StatelessWidget {
   final VoidCallback onPressed;
   final IconData? icon;
 
-  // ignore: unused_element
-  const _TopAction(this.label, {super.key, this.icon, required this.onPressed});
+  // ignore: unused_element, unused_element_parameter
+  const _TopAction(this.label, {required this.onPressed, this.icon});
 
   @override
   Widget build(BuildContext context) => Padding(

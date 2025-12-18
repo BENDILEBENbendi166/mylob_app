@@ -17,8 +17,8 @@ class NowPlayingSkeleton extends StatelessWidget {
             padding: const EdgeInsets.symmetric(vertical: 10.0),
             child: ListTile(
               leading: Container(
-                width: 90,
-                height: 90,
+                width: MediaQuery.of(context).size.width * 0.22,
+                height: MediaQuery.of(context).size.width * 0.22,
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(12),
                   gradient: LinearGradient(
@@ -38,6 +38,14 @@ class NowPlayingSkeleton extends StatelessWidget {
               subtitle: Container(
                 height: 16,
                 margin: const EdgeInsets.only(top: 6),
+                decoration: BoxDecoration(
+                  color: Colors.grey[300],
+                  borderRadius: BorderRadius.circular(6),
+                ),
+              ),
+              trailing: Container(
+                width: 24,
+                height: 24,
                 decoration: BoxDecoration(
                   color: Colors.grey[300],
                   borderRadius: BorderRadius.circular(6),
