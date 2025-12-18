@@ -3,6 +3,7 @@ import 'package:mylob_app/screens/hero_screen.dart';
 import 'package:mylob_app/widgets/footer.dart';
 import 'package:mylob_app/widgets/hotel_widget/build_info_card.dart';
 import 'package:mylob_app/widgets/city_widget/city_card.dart';
+import 'package:mylob_app/widgets/navbar.dart';
 import 'package:mylob_app/widgets/skeletons/hotel_carousel.dart';
 import 'package:mylob_app/widgets/skeletons/more_destination.dart';
 import 'package:mylob_app/widgets/skeletons/now_playing_skeleton.dart';
@@ -47,6 +48,7 @@ class _HomeScreenState extends State<HomeScreen> {
     final isWide = MediaQuery.of(context).size.width > 1100;
 
     return Scaffold(
+      appBar: const CustomNavBar(),
       body: SingleChildScrollView(
         physics: const BouncingScrollPhysics(),
         child: Padding(
