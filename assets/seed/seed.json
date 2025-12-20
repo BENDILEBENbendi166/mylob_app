@@ -16,7 +16,7 @@
         "district": "Westminster",
         "features": ["Free WiFi", "Restaurant", "Bar"],
         "basePrice": 180.0,
-        "photoUrls": ["l1.jpg"]
+        "photoUrls": ["c2.jpg"]
       },
       "manchester_inn": {
         "name": "Manchester Inn",
@@ -25,7 +25,7 @@
         "district": "Northern Quarter",
         "features": ["Breakfast Included", "Free WiFi"],
         "basePrice": 120.0,
-        "photoUrls": ["m1.jpg"]
+        "photoUrls": ["c3.jpg"]
       },
       "birmingham_resort": {
         "name": "Birmingham Resort",
@@ -34,7 +34,7 @@
         "district": "Central",
         "features": ["Spa", "Gym", "Pool"],
         "basePrice": 200.0,
-        "photoUrls": ["b1.jpg"]
+        "photoUrls": ["c4.jpg"]
       },
       "edinburgh_castle_view": {
         "name": "Edinburgh Castle View",
@@ -43,7 +43,7 @@
         "district": "Old Town",
         "features": ["Free WiFi", "Restaurant", "Historic View"],
         "basePrice": 300.0,
-        "photoUrls": ["e1.jpg"]
+        "photoUrls": ["c5.jpg"]
       },
       "glasgow_riverside": {
         "name": "Glasgow Riverside Hotel",
@@ -52,7 +52,7 @@
         "district": "Riverfront",
         "features": ["Gym", "Bar", "Conference Rooms"],
         "basePrice": 160.0,
-        "photoUrls": ["g1.jpg"]
+        "photoUrls": ["c6.jpg"]
       },
       "oxford_suites": {
         "name": "Oxford Suites",
@@ -61,7 +61,7 @@
         "district": "City Centre",
         "features": ["Breakfast Included", "Free WiFi"],
         "basePrice": 140.0,
-        "photoUrls": ["o1.jpg"]
+        "photoUrls": ["c7.jpg"]
       },
       "cambridge_gardens": {
         "name": "Cambridge Gardens Hotel",
@@ -70,7 +70,7 @@
         "district": "University Quarter",
         "features": ["Garden View", "Restaurant", "Free WiFi"],
         "basePrice": 190.0,
-        "photoUrls": ["c2.jpg"]
+        "photoUrls": ["c8.jpg"]
       },
       "york_minster_inn": {
         "name": "York Minster Inn",
@@ -79,7 +79,7 @@
         "district": "Historic Centre",
         "features": ["Historic View", "Breakfast Included"],
         "basePrice": 130.0,
-        "photoUrls": ["y1.jpg"]
+        "photoUrls": ["c9.jpg"]
       },
       "liverpool_docks": {
         "name": "Liverpool Docks Hotel",
@@ -88,7 +88,7 @@
         "district": "Docklands",
         "features": ["Bar", "Gym", "Free WiFi"],
         "basePrice": 170.0,
-        "photoUrls": ["l2.jpg"]
+        "photoUrls": ["c10.jpg"]
       }
     },
     "deals": {

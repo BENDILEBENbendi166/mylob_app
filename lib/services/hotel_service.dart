@@ -11,7 +11,8 @@ class HotelService {
     }
   }
 
-  static Future<List<Map<String, dynamic>>> fetchHotelsByCity(String city) async {
+  static Future<List<Map<String, dynamic>>> fetchHotelsByCity(
+      String city) async {
     try {
       final snapshot = await FirestoreConnect.db
           .collection('hotels')
@@ -22,6 +23,22 @@ class HotelService {
     } catch (e) {
       print("Error fetching hotels by city: $e");
       return [];
+    }
+  }
+
+  static Future<Map<String, dynamic>?> fetchHotelById(String id) async {
+    try {
+      final doc = await FirestoreConnect.db.collection('hotels').doc(id).get();
+
+      if (!doc.exists) return null;
+
+      return {
+        'id': doc.id,
+        ...doc.data()!,
+      };
+    } catch (e) {
+      print("Error fetching hotel by ID: $e");
+      return null;
     }
   }
 }

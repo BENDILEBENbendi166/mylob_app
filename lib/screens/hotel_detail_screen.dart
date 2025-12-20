@@ -25,11 +25,13 @@ class _HotelDetailScreenState extends State<HotelDetailScreen> {
   }
 
   Future<void> _fetchData() async {
-    final fetchedHotel = await HotelService.fetchHotelsByCity(widget.hotelId);
+    final fetchedHotel = await HotelService.fetchHotelById(widget.hotelId);
     final fetchedDeals = await DealService.fetchDealsByHotel(widget.hotelId);
 
+    if (!mounted) return; // ✅ prevents setState after dispose
+
     setState(() {
-      hotel = fetchedHotel as Map<String, dynamic>?;
+      hotel = fetchedHotel; // ✅ no cast needed
       deals = fetchedDeals;
       isLoading = false;
     });

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:mylob_app/screens/hero_screen.dart';
+import 'package:mylob_app/widgets/drawer.dart';
 import 'package:mylob_app/widgets/footer.dart';
 import 'package:mylob_app/widgets/hotel_widget/build_info_card.dart';
 import 'package:mylob_app/widgets/city_widget/city_card.dart';
@@ -10,6 +11,8 @@ import 'package:mylob_app/widgets/skeletons/now_playing_skeleton.dart';
 import 'package:mylob_app/services/hotel_service.dart';
 import 'package:mylob_app/services/deal_service.dart';
 import 'package:mylob_app/services/city_service.dart';
+import 'package:mylob_app/seed/database_seeder.dart';
+import 'package:flutter/foundation.dart'; // for kDebugMode
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -45,153 +48,226 @@ class _HomeScreenState extends State<HomeScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final isWide = MediaQuery.of(context).size.width > 1100;
+    final width = MediaQuery.of(context).size.width;
+    final isWide = width > 1100;
+    final isTablet = width > 700 && width <= 1100;
 
     return Scaffold(
+      drawer: const CustomDrawer(),
       appBar: const CustomNavBar(),
       body: SingleChildScrollView(
         physics: const BouncingScrollPhysics(),
-        child: Padding(
-          padding: const EdgeInsets.all(24.0),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              // Hero banner
-              const HeroScreen(),
-              const SizedBox(height: 32),
+        child: Column(
+          children: [
+            // ✅ Full-width hero banner
+            const HeroScreen(),
+            const SizedBox(height: 48),
 
-              // Why section
-              Text(
-                'Why MyLob.com?',
-                style: Theme.of(context).textTheme.headlineSmall?.copyWith(
-                      fontWeight: FontWeight.bold,
-                      color: Theme.of(context).colorScheme.primary,
-                    ),
-              ),
-              const SizedBox(height: 16),
-              const Wrap(
-                spacing: 16,
-                runSpacing: 16,
+            // ✅ Why section
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 24),
+              child: Column(
                 children: [
-                  BuildInfoCard(
-                    icon: Icons.credit_card,
-                    title: 'Pay at hotel',
-                    subtitle: 'No card needed',
-                    color: Color.fromARGB(255, 26, 74, 129),
+                  Text(
+                    'Why Lobideyim.com?',
+                    style: Theme.of(context).textTheme.headlineSmall?.copyWith(
+                          fontWeight: FontWeight.bold,
+                          color: Theme.of(context).colorScheme.primary,
+                        ),
                   ),
-                  BuildInfoCard(
-                    icon: Icons.local_offer,
-                    title: 'Real-time discounts',
-                    subtitle: 'Up to 70% off',
-                    color: Color.fromARGB(255, 26, 74, 129),
-                  ),
-                  BuildInfoCard(
-                    icon: Icons.today,
-                    title: 'Daily deals',
-                    subtitle: 'City, family, beach',
-                    color: Color.fromARGB(255, 26, 74, 129),
-                  ),
-                  BuildInfoCard(
-                    icon: Icons.eco,
-                    title: 'Zero waste',
-                    subtitle: 'Fill empty rooms',
-                    color: Color.fromARGB(255, 26, 74, 129),
-                  ),
-                  BuildInfoCard(
-                    icon: Icons.support_agent,
-                    title: '24/7 support',
-                    subtitle: 'We\'re here to help',
-                    color: Color.fromARGB(255, 26, 74, 129),
+                  const SizedBox(height: 20),
+                  const Wrap(
+                    spacing: 20,
+                    runSpacing: 20,
+                    alignment: WrapAlignment.center,
+                    children: [
+                      BuildInfoCard(
+                        icon: Icons.credit_card,
+                        title: 'Pay at hotel',
+                        subtitle: 'No card needed',
+                        color: Color.fromARGB(255, 26, 74, 129),
+                      ),
+                      BuildInfoCard(
+                        icon: Icons.local_offer,
+                        title: 'Real-time discounts',
+                        subtitle: 'Up to 70% off',
+                        color: Color.fromARGB(255, 26, 74, 129),
+                      ),
+                      BuildInfoCard(
+                        icon: Icons.today,
+                        title: 'Daily deals',
+                        subtitle: 'City, family, beach',
+                        color: Color.fromARGB(255, 26, 74, 129),
+                      ),
+                      BuildInfoCard(
+                        icon: Icons.eco,
+                        title: 'Zero waste',
+                        subtitle: 'Fill empty rooms',
+                        color: Color.fromARGB(255, 26, 74, 129),
+                      ),
+                      BuildInfoCard(
+                        icon: Icons.support_agent,
+                        title: '24/7 support',
+                        subtitle: 'We\'re here to help',
+                        color: Color.fromARGB(255, 26, 74, 129),
+                      ),
+                    ],
                   ),
                 ],
               ),
+            ),
 
-              const SizedBox(height: 40),
+            const SizedBox(height: 60),
 
-              // Deals section
-              Text('Top Last-Minute Hotel Deals',
-                  style: Theme.of(context).textTheme.headlineSmall),
-              const SizedBox(height: 20),
-
-              isWide
-                  ? Row(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Flexible(
-                          flex: 2,
-                          child: HotelCarousel(
-                            hotels: hotels,
-                            isLoading: isLoading,
-                          ),
+            // ✅ Deals section
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 24),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    'Top Last-Minute Hotel Deals',
+                    style: Theme.of(context).textTheme.headlineSmall?.copyWith(
+                          fontWeight: FontWeight.bold,
                         ),
-                        const SizedBox(width: 20),
-                        Flexible(
-                          flex: 1,
-                          child: isLoading
-                              ? const NowPlayingSkeleton()
-                              : ListView.builder(
-                                  shrinkWrap: true,
-                                  itemCount: deals.length,
-                                  itemBuilder: (context, index) {
-                                    return Text(deals[index]['title']);
-                                  },
-                                ),
-                        ),
-                      ],
-                    )
-                  : Column(
-                      children: [
-                        HotelCarousel(
-                          hotels: hotels,
-                          isLoading: isLoading,
-                        ),
-                        const SizedBox(height: 20),
-                        isLoading
-                            ? const NowPlayingSkeleton()
-                            : ListView.builder(
-                                shrinkWrap: true,
-                                itemCount: deals.length,
-                                itemBuilder: (context, index) {
-                                  return Text(deals[index]['title']);
-                                },
+                  ),
+                  const SizedBox(height: 24),
+                  isWide
+                      ? Row(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Expanded(
+                              flex: 2,
+                              child: HotelCarousel(
+                                hotels: hotels,
+                                isLoading: isLoading,
                               ),
-                      ],
-                    ),
-
-              const SizedBox(height: 40),
-
-              // Explore section
-              Text(
-                'Explore More Destinations',
-                style: Theme.of(context).textTheme.headlineSmall?.copyWith(
-                      fontWeight: FontWeight.bold,
-                      color: Theme.of(context).colorScheme.primary,
-                    ),
+                            ),
+                            const SizedBox(width: 24),
+                            Expanded(
+                              flex: 1,
+                              child: isLoading
+                                  ? const NowPlayingSkeleton()
+                                  : ListView.builder(
+                                      shrinkWrap: true,
+                                      itemCount: deals.length,
+                                      itemBuilder: (context, index) {
+                                        return Padding(
+                                          padding:
+                                              const EdgeInsets.only(bottom: 12),
+                                          child: Text(
+                                            deals[index]['title'],
+                                            style:
+                                                const TextStyle(fontSize: 16),
+                                          ),
+                                        );
+                                      },
+                                    ),
+                            ),
+                          ],
+                        )
+                      : Column(
+                          children: [
+                            HotelCarousel(
+                              hotels: hotels,
+                              isLoading: isLoading,
+                            ),
+                            const SizedBox(height: 24),
+                            isLoading
+                                ? const NowPlayingSkeleton()
+                                : ListView.builder(
+                                    shrinkWrap: true,
+                                    itemCount: deals.length,
+                                    itemBuilder: (context, index) {
+                                      return Padding(
+                                        padding:
+                                            const EdgeInsets.only(bottom: 12),
+                                        child: Text(
+                                          deals[index]['title'],
+                                          style: const TextStyle(fontSize: 16),
+                                        ),
+                                      );
+                                    },
+                                  ),
+                          ],
+                        ),
+                ],
               ),
-              const SizedBox(height: 20),
-              isLoading
-                  ? const MoreDestinationSkeleton()
-                  : GridView.builder(
-                      shrinkWrap: true,
-                      physics: const NeverScrollableScrollPhysics(),
-                      gridDelegate:
-                          const SliverGridDelegateWithFixedCrossAxisCount(
-                        crossAxisCount: 3,
-                        childAspectRatio: 0.9,
-                        crossAxisSpacing: 12,
-                        mainAxisSpacing: 12,
-                      ),
-                      itemCount: cities.length,
-                      itemBuilder: (context, index) =>
-                          CityCard(city: cities[index]),
-                    ),
+            ),
 
-              const SizedBox(height: 40),
+            const SizedBox(height: 60),
 
-              // Footer
-              const FooterScreen(),
-            ],
-          ),
+            // ✅ Explore section
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 24),
+              child: Column(
+                children: [
+                  Text(
+                    'Explore More Destinations',
+                    style: Theme.of(context).textTheme.headlineSmall?.copyWith(
+                          fontWeight: FontWeight.bold,
+                          color: Theme.of(context).colorScheme.primary,
+                        ),
+                  ),
+                  const SizedBox(height: 24),
+                  isLoading
+                      ? const MoreDestinationSkeleton()
+                      : GridView.builder(
+                          shrinkWrap: true,
+                          physics: const NeverScrollableScrollPhysics(),
+                          gridDelegate:
+                              SliverGridDelegateWithFixedCrossAxisCount(
+                            crossAxisCount: isWide
+                                ? 4
+                                : isTablet
+                                    ? 3
+                                    : 2,
+                            childAspectRatio: 0.9,
+                            crossAxisSpacing: 16,
+                            mainAxisSpacing: 16,
+                          ),
+                          itemCount: cities.length,
+                          itemBuilder: (context, index) =>
+                              CityCard(city: cities[index]),
+                        ),
+                ],
+              ),
+            ),
+
+            const SizedBox(height: 60),
+
+// ✅ Developer-only seed button
+            if (kDebugMode)
+              Padding(
+                padding: const EdgeInsets.only(bottom: 20),
+                child: ElevatedButton(
+                  onPressed: () async {
+                    try {
+                      await DatabaseSeeder.seedAll();
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        const SnackBar(
+                          content: Text("✅ Database seeded successfully!"),
+                          backgroundColor: Colors.green,
+                        ),
+                      );
+                    } catch (e) {
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        SnackBar(
+                          content: Text("❌ Seeding failed: $e"),
+                          backgroundColor: Colors.red,
+                        ),
+                      );
+                    }
+                    print("Seeding cities...");
+                    print("Seeding hotels...");
+                    print("Seeding deals...");
+                  },
+                  child: const Text("Seed Database"),
+                ),
+              ),
+            // ✅ Footer
+            const FooterScreen(),
+          ],
         ),
       ),
     );

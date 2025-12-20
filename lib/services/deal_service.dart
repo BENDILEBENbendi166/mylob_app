@@ -12,7 +12,7 @@ class DealService {
 
       return snapshot.docs.map((doc) => {'id': doc.id, ...doc.data()}).toList();
     } catch (e) {
-      print("Error fetching deals: $e");
+      print("Fetching deals for hotelId=$hotelId ordered by date");
       return [];
     }
   }

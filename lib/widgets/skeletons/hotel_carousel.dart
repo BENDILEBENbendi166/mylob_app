@@ -14,15 +14,23 @@ class HotelCarousel extends StatelessWidget {
     this.isLoading = false,
   });
 
+  double _adaptiveHeight(BuildContext context) {
+    final h = MediaQuery.of(context).size.height;
+
+    // ✅ Safe adaptive height for all screens
+    if (Responsive.isMobile(context)) return h.clamp(180.0, 260.0);
+    if (Responsive.isTablet(context)) return h.clamp(240.0, 320.0);
+    return h.clamp(260.0, 360.0); // desktop/web
+  }
+
   @override
   Widget build(BuildContext context) {
     if (isLoading) {
-      // Skeleton shimmer carousel
       return CustomCarouselSlider(
-        height: 300,
+        height: _adaptiveHeight(context),
         items: List.generate(
           3,
-          (index) => const HotelCard.skeleton(), // skeleton version
+          (index) => const HotelCard.skeleton(),
         ),
       );
     }
@@ -36,17 +44,26 @@ class HotelCarousel extends StatelessWidget {
       );
     }
 
-    return CustomCarouselSlider(
-      height: Responsive.isMobile(context) ? 250 : 350,
-      items: hotels
-          .map((hotel) => GestureDetector(
-                onTap: () {
-                  // Navigate to hotel detail
-                  context.go('/hotel/${hotel['id']}');
-                },
+    final height = _adaptiveHeight(context);
+
+    return Padding(
+      padding: const EdgeInsets.only(bottom: 12),
+      child: CustomCarouselSlider(
+        height: height,
+        items: hotels.map((hotel) {
+          return GestureDetector(
+            onTap: () => context.go('/hotel/${hotel['id']}'),
+            child: AnimatedScale(
+              duration: const Duration(milliseconds: 300),
+              scale: 0.98,
+              child: Padding(
+                padding: const EdgeInsets.symmetric(vertical: 6),
                 child: HotelCard(hotel: hotel),
-              ))
-          .toList(),
+              ),
+            ),
+          );
+        }).toList(),
+      ),
     );
   }
 }

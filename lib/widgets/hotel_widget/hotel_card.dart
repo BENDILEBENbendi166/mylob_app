@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:skeletonizer/skeletonizer.dart';
+import 'package:mylob_app/utils/image_path.dart';
 
 class HotelCard extends StatelessWidget {
   final Map<String, dynamic>? hotel;
@@ -30,13 +31,9 @@ class HotelCard extends StatelessWidget {
                       width: double.infinity,
                       color: Colors.grey[300],
                     )
-                  : Image.network(
-                      hotel?['imageUrl'] ?? 'https://via.placeholder.com/300',
-                      height: 140,
-                      width: double.infinity,
-                      fit: BoxFit.cover,
-                    ),
+                  : safeAssetImage(hotel!['photoUrls'][0]),
             ),
+
             Padding(
               padding: const EdgeInsets.all(8.0),
               child: Column(
@@ -68,8 +65,11 @@ class HotelCard extends StatelessWidget {
                       : Row(
                           children: List.generate(
                             hotel?['stars'] ?? 0,
-                            (index) => const Icon(Icons.star,
-                                color: Colors.orange, size: 16),
+                            (index) => const Icon(
+                              Icons.star,
+                              color: Colors.orange,
+                              size: 16,
+                            ),
                           ),
                         ),
                   const SizedBox(height: 4),

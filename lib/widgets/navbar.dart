@@ -5,13 +5,17 @@ class CustomNavBar extends StatelessWidget implements PreferredSizeWidget {
   const CustomNavBar({super.key});
 
   @override
-  Size get preferredSize => const Size.fromHeight(50);
+  Size get preferredSize => const Size.fromHeight(60);
 
   @override
   Widget build(BuildContext context) {
-    final _ = MediaQuery.of(context).size.width > 1100;
+    final width = MediaQuery.of(context).size.width;
+    final isWide = width > 1100;
 
     return AppBar(
+      automaticallyImplyLeading: !isWide, // ✅ hamburger only on mobile/tablet
+      iconTheme: const IconThemeData(color: Colors.white),
+
       flexibleSpace: Container(
         decoration: const BoxDecoration(
           gradient: LinearGradient(
@@ -24,30 +28,40 @@ class CustomNavBar extends StatelessWidget implements PreferredSizeWidget {
           ),
         ),
       ),
+
       elevation: 0,
-      title: TextButton(
-        onPressed: () {},
+
+      title: InkWell(
+        onTap: () => Navigator.pushNamed(context, '/'),
         child: const Text(
           'Lobideyim',
           style: TextStyle(
             color: Colors.white,
-            fontSize: 20,
+            fontSize: 22,
             fontWeight: FontWeight.bold,
           ),
         ),
       ),
-      actions: [
-        const _LanguageToggle(),
-        _TopAction('Save Your Property', onPressed: () {
-          Navigator.pushNamed(context, '/property');
-        }),
-        _TopAction('Sign Up', onPressed: () {
-          Navigator.pushNamed(context, '/signup');
-        }),
-        _TopAction('Log In', onPressed: () {
-          Navigator.pushNamed(context, '/log in');
-        }),
-      ],
+
+      // ✅ Desktop/tablet actions
+      actions: isWide
+          ? [
+              const _LanguageToggle(),
+              _TopAction(
+                'Save Your Property',
+                onPressed: () => Navigator.pushNamed(context, '/property'),
+              ),
+              _TopAction(
+                'Sign Up',
+                onPressed: () => Navigator.pushNamed(context, '/signup'),
+              ),
+              _TopAction(
+                'Log In',
+                onPressed: () => Navigator.pushNamed(context, '/login'),
+              ),
+              const SizedBox(width: 12),
+            ]
+          : null, // ✅ Mobile/tablet → actions hidden (drawer used instead)
     );
   }
 }
@@ -57,51 +71,51 @@ class _TopAction extends StatelessWidget {
   final VoidCallback onPressed;
   final IconData? icon;
 
-  // ignore: unused_element, unused_element_parameter
+  // ignore: unused_element_parameter
   const _TopAction(this.label, {required this.onPressed, this.icon});
 
   @override
-  Widget build(BuildContext context) => Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 8),
-        child: Center(
-          child: TextButton.icon(
-            style: TextButton.styleFrom(
-              backgroundColor: Theme.of(context).colorScheme.primary,
-              foregroundColor: Theme.of(context).colorScheme.onPrimary,
-            ),
-            onPressed: onPressed,
-            icon: icon != null ? Icon(icon, size: 18) : const SizedBox.shrink(),
-            label: Text(
-              label,
-              style: const TextStyle(
-                color: Color.fromARGB(255, 243, 242, 243),
-                fontWeight: FontWeight.bold,
-              ),
-            ),
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 6),
+      child: TextButton.icon(
+        style: TextButton.styleFrom(
+          backgroundColor: Colors.white.withOpacity(0.15),
+          foregroundColor: Colors.white,
+          padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 10),
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(10),
           ),
         ),
-      );
+        onPressed: onPressed,
+        icon: icon != null ? Icon(icon, size: 18) : const SizedBox.shrink(),
+        label: Text(
+          label,
+          style: const TextStyle(
+            fontWeight: FontWeight.bold,
+            color: Colors.white,
+          ),
+        ),
+      ),
+    );
+  }
 }
 
-// ignore: unused_element
 class _LanguageToggle extends StatelessWidget {
   const _LanguageToggle();
 
   @override
   Widget build(BuildContext context) {
+    final locale = Localizations.localeOf(context).languageCode;
+
     return TextButton(
       onPressed: () {
-        // Switch between English and Turkish
-        final currentLocale = Localizations.localeOf(context);
-        final newLocale = currentLocale.languageCode == 'en'
-            ? const Locale('tr')
-            : const Locale('en');
+        final newLocale =
+            locale == 'en' ? const Locale('tr') : const Locale('en');
         myLob.setLocale(context, newLocale);
       },
       child: Text(
-        Localizations.localeOf(context).languageCode == 'en'
-            ? 'Türkçe'
-            : 'English',
+        locale == 'en' ? 'Türkçe' : 'English',
         style: const TextStyle(color: Colors.white),
       ),
     );

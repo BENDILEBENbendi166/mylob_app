@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:mylob_app/utils/image_path.dart';
 import 'package:skeletonizer/skeletonizer.dart';
 
 class CityCard extends StatelessWidget {
@@ -28,10 +29,8 @@ class CityCard extends StatelessWidget {
                       width: double.infinity,
                       color: Colors.grey[300],
                     )
-                  : Image.network(
-                      city?['imageUrl'] ?? 'https://via.placeholder.com/300',
-                      height: 120,
-                      width: double.infinity,
+                  : safeAssetImage(
+                      city?['imageUrl'] ?? '',
                       fit: BoxFit.cover,
                     ),
             ),
