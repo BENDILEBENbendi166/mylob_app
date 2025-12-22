@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:mylob_app/utils/image_path.dart';
 import 'package:skeletonizer/skeletonizer.dart';
 
@@ -13,41 +14,68 @@ class CityCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Card(
-      elevation: 4,
-      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
-      child: Skeletonizer(
-        enabled: isSkeleton,
-        child: Column(
-          children: [
-            ClipRRect(
-              borderRadius:
-                  const BorderRadius.vertical(top: Radius.circular(12)),
-              child: isSkeleton
-                  ? Container(
-                      height: 120,
-                      width: double.infinity,
-                      color: Colors.grey[300],
-                    )
-                  : safeAssetImage(
-                      city?['imageUrl'] ?? '',
-                      fit: BoxFit.cover,
-                    ),
-            ),
-            Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: isSkeleton
-                  ? Container(
-                      height: 18,
-                      width: 100,
-                      color: Colors.grey[300],
-                    )
-                  : Text(
-                      city?['name'] ?? '',
-                      style: const TextStyle(fontWeight: FontWeight.bold),
-                    ),
-            ),
-          ],
+    final attractions = city?['popularAttractions'] as List<dynamic>? ?? [];
+
+    return InkWell(
+      borderRadius: BorderRadius.circular(12),
+      onTap: isSkeleton || city == null
+          ? null
+          : () => context.go('/cities/${city!['id']}'),
+      child: Card(
+        elevation: 4,
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+        child: Skeletonizer(
+          enabled: isSkeleton,
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              // ✅ IMAGE
+              ClipRRect(
+                borderRadius:
+                    const BorderRadius.vertical(top: Radius.circular(12)),
+                child: isSkeleton
+                    ? Container(
+                        height: 120,
+                        color: Colors.grey[300],
+                      )
+                    : safeAssetImage(
+                        city?['imageUrl'] ?? '',
+                        fit: BoxFit.cover,
+                      ),
+              ),
+
+              // ✅ NAME + ATTRACTIONS
+              Padding(
+                padding: const EdgeInsets.all(12.0),
+                child: isSkeleton
+                    ? Container(
+                        height: 18,
+                        width: 100,
+                        color: Colors.grey[300],
+                      )
+                    : Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            city?['name'] ?? '',
+                            style: const TextStyle(
+                              fontWeight: FontWeight.bold,
+                              fontSize: 16,
+                            ),
+                          ),
+                          const SizedBox(height: 4),
+                          Text(
+                            "${attractions.length} attractions",
+                            style: TextStyle(
+                              fontSize: 13,
+                              color: Colors.grey[600],
+                            ),
+                          ),
+                        ],
+                      ),
+              ),
+            ],
+          ),
         ),
       ),
     );

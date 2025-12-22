@@ -1,9 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:mylob_app/services/deal_service.js' as DealService;
+import 'package:mylob_app/services/hotel_service.dart';
 import 'package:mylob_app/widgets/hotel_widget/deal_card.dart';
 import 'package:mylob_app/widgets/hotel_widget/hotel_info_widget.dart';
-import 'package:mylob_app/widgets/skeletons/now_playing_skeleton.dart';
-import 'package:mylob_app/services/hotel_service.dart';
-import 'package:mylob_app/services/deal_service.dart';
 
 class HotelDetailScreen extends StatefulWidget {
   final String hotelId;
@@ -28,10 +27,10 @@ class _HotelDetailScreenState extends State<HotelDetailScreen> {
     final fetchedHotel = await HotelService.fetchHotelById(widget.hotelId);
     final fetchedDeals = await DealService.fetchDealsByHotel(widget.hotelId);
 
-    if (!mounted) return; // ✅ prevents setState after dispose
+    if (!mounted) return;
 
     setState(() {
-      hotel = fetchedHotel; // ✅ no cast needed
+      hotel = fetchedHotel;
       deals = fetchedDeals;
       isLoading = false;
     });
@@ -42,7 +41,29 @@ class _HotelDetailScreenState extends State<HotelDetailScreen> {
     if (isLoading) {
       return const Padding(
         padding: EdgeInsets.all(16),
-        child: NowPlayingSkeleton(itemCount: 3), // shimmer list
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            SizedBox(
+              height: 200,
+              child: DecoratedBox(
+                decoration: BoxDecoration(color: Colors.grey),
+              ),
+            ),
+            SizedBox(height: 20),
+            SizedBox(
+              height: 20,
+              width: 150,
+              child: DecoratedBox(
+                decoration: BoxDecoration(color: Colors.grey),
+              ),
+            ),
+            SizedBox(height: 12),
+            DealCard.skeleton(),
+            SizedBox(height: 12),
+            DealCard.skeleton(),
+          ],
+        ),
       );
     }
 
@@ -60,8 +81,19 @@ class _HotelDetailScreenState extends State<HotelDetailScreen> {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          HotelInfoWidget(hotel: hotel!), // ✅ pass hotel map directly
+          if (hotel!['photoUrls'] != null && hotel!['photoUrls'].isNotEmpty)
+            ClipRRect(
+              borderRadius: BorderRadius.circular(12),
+              child: Image.asset(
+                'assets/images/${hotel!['photoUrls'][0]}',
+                height: 200,
+                width: double.infinity,
+                fit: BoxFit.cover,
+              ),
+            ),
           const SizedBox(height: 20),
+          HotelInfoWidget(hotel: hotel!),
+          const SizedBox(height: 32),
           Text(
             'Available Deals',
             style: Theme.of(context).textTheme.titleMedium?.copyWith(
@@ -72,7 +104,12 @@ class _HotelDetailScreenState extends State<HotelDetailScreen> {
           deals.isEmpty
               ? const Text('No deals available for this hotel')
               : Column(
-                  children: deals.map((deal) => DealCard(deal: deal)).toList(),
+                  children: deals
+                      .map((deal) => Padding(
+                            padding: const EdgeInsets.only(bottom: 12),
+                            child: DealCard(deal: deal),
+                          ))
+                      .toList(),
                 ),
         ],
       ),

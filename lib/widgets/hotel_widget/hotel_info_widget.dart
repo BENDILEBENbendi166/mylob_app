@@ -6,20 +6,39 @@ class HotelInfoWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final features = hotel['features'] as List<dynamic>? ?? [];
+
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text(hotel['name'], style: Theme.of(context).textTheme.headlineSmall),
+        Text(
+          hotel['name'],
+          style: Theme.of(context).textTheme.headlineSmall,
+        ),
         const SizedBox(height: 8),
-        Text(hotel['address'] ?? 'No address available'),
+        Text(
+          "${hotel['city']} • ${hotel['district']}",
+          style: Theme.of(context).textTheme.bodyMedium,
+        ),
         const SizedBox(height: 12),
-        Text(hotel['description'] ?? 'No description available'),
+        Text(
+          "⭐ ${hotel['stars']} stars",
+          style: Theme.of(context).textTheme.bodyLarge,
+        ),
         const SizedBox(height: 12),
+        Text(
+          "£${hotel['basePrice']} per night",
+          style: Theme.of(context).textTheme.titleMedium,
+        ),
+        const SizedBox(height: 16),
+        Text(
+          "Features",
+          style: Theme.of(context).textTheme.titleSmall,
+        ),
+        const SizedBox(height: 8),
         Wrap(
           spacing: 8,
-          children: (hotel['amenities'] as List<dynamic>? ?? [])
-              .map((a) => Chip(label: Text(a)))
-              .toList(),
+          children: features.map((f) => Chip(label: Text(f))).toList(),
         ),
       ],
     );

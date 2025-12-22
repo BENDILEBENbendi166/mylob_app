@@ -1,39 +1,55 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
-import 'package:mylob_app/services/city_service.js' as CityService;
-import 'package:mylob_app/services/hotel_service.js' as HotelService;
+import 'package:mylob_app/services/city_service.dart';
 import 'package:mylob_app/widgets/hotel_widget/hotel_card.dart';
+import 'package:mylob_app/services/hotel_service.dart';
 import 'package:mylob_app/utils/responsive.dart';
 
-class FavoritesScreen extends StatefulWidget {
-  const FavoritesScreen({super.key});
+class CityScreen extends StatefulWidget {
+  final String cityId;
+  const CityScreen({super.key, required this.cityId});
 
   @override
-  State<FavoritesScreen> createState() => _FavoritesScreenState();
+  State<CityScreen> createState() => _CityScreenState();
 }
 
-class _FavoritesScreenState extends State<FavoritesScreen> {
-  List<Map<String, dynamic>> favorites = [];
-  List<Map<String, dynamic>> cities = [];
+class _CityScreenState extends State<CityScreen> {
+  List<Map<String, dynamic>> hotels = [];
+  Map<String, dynamic>? city;
   bool isLoading = true;
+
+  StreamSubscription? _hotelSub;
+  StreamSubscription? _citySub;
 
   @override
   void initState() {
     super.initState();
-    _loadFavorites();
+    _listenToStreams();
   }
 
-  Future<void> _loadFavorites() async {
-    final allHotels = await HotelService.fetchHotels();
-    final allCities = await CityService.fetchCitiesFirestore();
-
-    // ✅ Simulate favorites (first 5)
-    final favs = allHotels.take(5).toList();
-
-    setState(() {
-      favorites = favs as List<Map<String, dynamic>>;
-      cities = allCities as List<Map<String, dynamic>>;
-      isLoading = false;
+  void _listenToStreams() {
+    // ✅ Listen to hotels in this city
+    _hotelSub = HotelService.streamHotels(widget.cityId).listen((hotelList) {
+      setState(() {
+        hotels = hotelList;
+      });
     });
+
+    // ✅ Listen to the specific city
+    _citySub = CityService.streamCities(widget.cityId).listen((cityData) {
+      setState(() {
+        city = cityData as Map<String, dynamic>?;
+        isLoading = false; // ✅ stop loading only when city is ready
+      });
+    });
+  }
+
+  @override
+  void dispose() {
+    _hotelSub?.cancel();
+    _citySub?.cancel();
+    super.dispose();
   }
 
   @override
@@ -41,22 +57,24 @@ class _FavoritesScreenState extends State<FavoritesScreen> {
     final r = Responsive.of(context);
 
     return Scaffold(
-      appBar: AppBar(title: const Text('My Favorites')),
+      appBar: AppBar(
+        title: Text(city?['name'] ?? "Loading..."),
+      ),
       body: Padding(
         padding: r.pagePadding,
-        child: isLoading
+        child: isLoading || city == null
             ? _buildSkeletonGrid(r)
-            : favorites.isEmpty
+            : hotels.isEmpty
                 ? const Center(
                     child: Text(
-                      'No favorites yet',
+                      'No hotels found in this city',
                       style: TextStyle(
                         fontSize: 16,
                         fontWeight: FontWeight.w500,
                       ),
                     ),
                   )
-                : _buildFavoritesGrid(r),
+                : _buildHotelGrid(r),
       ),
     );
   }
@@ -84,7 +102,7 @@ class _FavoritesScreenState extends State<FavoritesScreen> {
     );
   }
 
-  Widget _buildFavoritesGrid(Responsive r) {
+  Widget _buildHotelGrid(Responsive r) {
     return GridView.builder(
       gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
         crossAxisCount: r.isMobile
@@ -100,26 +118,11 @@ class _FavoritesScreenState extends State<FavoritesScreen> {
         crossAxisSpacing: r.spacing / 2,
         mainAxisSpacing: r.spacing / 2,
       ),
-      itemCount: favorites.length,
-      itemBuilder: (_, index) {
-        final hotel = favorites[index];
-
-        // ✅ Find matching city
-        final city = cities.firstWhere(
-          (c) => c['name'] == hotel['city'],
-          orElse: () => {
-            'id': 'unknown',
-            'name': hotel['city'],
-            'popularAttractions': [],
-            'imageUrl': '',
-          },
-        );
-
-        return HotelCard(
-          hotel: hotel,
-          city: city,
-        );
-      },
+      itemCount: hotels.length,
+      itemBuilder: (_, index) => HotelCard(
+        hotel: hotels[index],
+        city: city!,
+      ),
     );
   }
 }

@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:mylob_app/services/city_service.js' as CityService;
 import 'package:mylob_app/widgets/city_widget/city_card.dart';
-import 'package:mylob_app/widgets/skeletons/more_destination.dart';
-import 'package:mylob_app/services/city_service.dart';
-import 'package:mylob_app/widgets/responsive.dart';
+import 'package:mylob_app/utils/responsive.dart';
 
 class CityListScreen extends StatefulWidget {
   const CityListScreen({super.key});
@@ -23,6 +22,7 @@ class _CityListScreenState extends State<CityListScreen> {
 
   Future<void> _fetchCities() async {
     final result = await CityService.fetchCitiesFirestore();
+
     setState(() {
       cities = result;
       isLoading = false;
@@ -31,10 +31,25 @@ class _CityListScreenState extends State<CityListScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final r = Responsive.of(context);
+
     if (isLoading) {
-      return const Padding(
-        padding: EdgeInsets.all(16),
-        child: MoreDestinationSkeleton(), // shimmer grid
+      return GridView.builder(
+        padding: r.pagePadding,
+        shrinkWrap: true,
+        physics: const NeverScrollableScrollPhysics(),
+        gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+          crossAxisCount: r.gridColumns,
+          childAspectRatio: r.isDesktop
+              ? 1
+              : r.isTablet
+                  ? 0.9
+                  : 0.8,
+          crossAxisSpacing: r.spacing / 2,
+          mainAxisSpacing: r.spacing / 2,
+        ),
+        itemCount: 6,
+        itemBuilder: (_, __) => const CityCard.skeleton(),
       );
     }
 
@@ -48,19 +63,19 @@ class _CityListScreenState extends State<CityListScreen> {
     }
 
     return GridView.builder(
-      padding: const EdgeInsets.all(16),
+      padding: r.pagePadding,
       gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-        crossAxisCount: Responsive.isMobile(context)
-            ? 2
-            : Responsive.isTablet(context)
-                ? 3
-                : 4,
-        childAspectRatio: 0.9,
-        crossAxisSpacing: 12,
-        mainAxisSpacing: 12,
+        crossAxisCount: r.gridColumns,
+        childAspectRatio: r.isDesktop
+            ? 1
+            : r.isTablet
+                ? 0.9
+                : 0.8,
+        crossAxisSpacing: r.spacing / 2,
+        mainAxisSpacing: r.spacing / 2,
       ),
       itemCount: cities.length,
-      itemBuilder: (context, index) => CityCard(city: cities[index]),
+      itemBuilder: (_, index) => CityCard(city: cities[index]),
     );
   }
 }

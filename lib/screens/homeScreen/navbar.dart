@@ -2,7 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:mylob_app/main.dart';
 
 class CustomNavBar extends StatelessWidget implements PreferredSizeWidget {
-  const CustomNavBar({super.key});
+  const CustomNavBar(
+      {super.key, required Color backgroundColor, required Color iconColor});
 
   @override
   Size get preferredSize => const Size.fromHeight(60);

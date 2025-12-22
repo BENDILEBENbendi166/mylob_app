@@ -7,7 +7,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:mylob_app/screens/home_screen.dart';
+import 'package:mylob_app/screens/homeScreen/home_screen.dart';
 
 void main() {
   testWidgets('HomeScreen smoke test', (WidgetTester tester) async {

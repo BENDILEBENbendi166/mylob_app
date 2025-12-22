@@ -12,10 +12,10 @@ class FooterScreen extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
           Text(
-            '© 2026 From Lobideyim.com, MyLob. All rights reserved.',
+            '© 2026 From Lobideyim.com . All rights reserved.',
             style: TextStyle(color: Colors.grey[600]),
           ),
-         const SizedBox(height: 8),
+          const SizedBox(height: 8),
           Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [

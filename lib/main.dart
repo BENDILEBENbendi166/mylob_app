@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:go_router/go_router.dart';
-import 'package:mylob_app/pages/category_page.dart';
+import 'package:mylob_app/pages/city_page.dart';
 import 'package:mylob_app/pages/city_list_page.dart';
 import 'package:mylob_app/pages/deal_list_page.dart';
 import 'package:mylob_app/pages/favorites_page.dart';
@@ -23,64 +23,58 @@ void main() async {
   runApp(const myLob());
 }
 
-
-
 // ignore: camel_case_types
 class myLob extends StatelessWidget {
   const myLob({super.key});
 
-
   @override
   Widget build(BuildContext context) {
     final router = GoRouter(
-     routes: [
-  GoRoute(
-    path: '/',
-    builder: (_, __) => const HomePage(),
-  ),
-  GoRoute(
-    path: '/category/:id',
-    builder: (_, state) => CategoryPage(id: state.pathParameters['id']!),
-  ),
-  GoRoute(
-    path: '/hotel/:id',
-    builder: (_, state) => HotelPage(id: state.pathParameters['id']!),
-  ),
-  GoRoute(
-    path: '/reservation/:code',
-    builder: (_, state) => ReservationPage(code: state.pathParameters['code']!),
-  ),
-  GoRoute(
-  path: '/cities',
-  builder: (_, __) => const CityListPage(),
-),
-GoRoute(
-  path: '/deals/:hotelId',
-  builder: (_, state) => DealListPage(hotelId: state.pathParameters['hotelId']!),
-),
-GoRoute(
-  path: '/favorites', 
-  builder: (_, __) => const FavoritesPage(),
-  ),
-GoRoute(
-  path: '/profile', 
-  builder: (_, __) => const ProfilePage(),
-  ),
-GoRoute(
-  path: '/settings', 
-  builder: (_, __) => const SettingsPage(),
-  ),
-GoRoute(
-  path: '/login', 
-  builder: (_, __) => const LoginPage(),
-  ),
-GoRoute(
-  path: '/signup', 
-  builder: (_, __) => const SignUpPage(),
-  ),
+      routes: [
+        GoRoute(
+          path: '/',
+          builder: (_, __) => const HomePage(),
+        ),
 
-]
+        // ✅ Cities
+        GoRoute(
+          path: '/cities',
+          builder: (_, __) => const CityListPage(),
+        ),
+        GoRoute(
+          path: '/cities/:id',
+          builder: (_, state) => CityPage(id: state.pathParameters['id']!),
+        ),
 
+        // ✅ Hotels
+        GoRoute(
+          path: '/hotel/:id',
+          builder: (_, state) => HotelPage(id: state.pathParameters['id']!),
+        ),
+
+        // ✅ Deals
+        GoRoute(
+          path: '/deals/:hotelId',
+          builder: (_, state) =>
+              DealListPage(hotelId: state.pathParameters['hotelId']!),
+        ),
+
+        // ✅ Reservation
+        GoRoute(
+          path: '/reservation/:code',
+          builder: (_, state) =>
+              ReservationPage(code: state.pathParameters['code']!),
+        ),
+
+        // ✅ User
+        GoRoute(path: '/favorites', builder: (_, __) => const FavoritesPage()),
+        GoRoute(path: '/profile', builder: (_, __) => const ProfilePage()),
+        GoRoute(path: '/settings', builder: (_, __) => const SettingsPage()),
+
+        // ✅ Auth
+        GoRoute(path: '/login', builder: (_, __) => const LoginPage()),
+        GoRoute(path: '/signup', builder: (_, __) => const SignUpPage()),
+      ],
     );
 
     return MaterialApp.router(
