@@ -5,9 +5,9 @@ import 'package:mylob_app/screens/homeScreen/deals_section.dart';
 import 'package:mylob_app/screens/homeScreen/seed_button.dart';
 import 'package:mylob_app/screens/homeScreen/why_section.dart';
 import 'package:mylob_app/screens/homeScreen/footer.dart';
-import 'package:mylob_app/services/city_service.js' as CityService;
-import 'package:mylob_app/services/deal_service.js' as DealService;
-import 'package:mylob_app/services/hotel_service.js' as HotelService;
+import 'package:mylob_app/services/city_service.dart';
+import 'package:mylob_app/services/deal_service.dart';
+import 'package:mylob_app/services/hotel_service.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});

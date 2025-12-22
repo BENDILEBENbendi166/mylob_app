@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:mylob_app/services/city_service.js' as CityService;
+import 'package:mylob_app/services/city_service.dart';
 import 'package:mylob_app/widgets/city_widget/city_card.dart';
 import 'package:mylob_app/utils/responsive.dart';
 

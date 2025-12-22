@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
-import 'package:mylob_app/services/city_service.js' as CityService;
-import 'package:mylob_app/services/hotel_service.js' as HotelService;
+import 'package:mylob_app/services/city_service.dart';
+import 'package:mylob_app/services/hotel_service.dart';
 import 'package:mylob_app/utils/responsive.dart';
 import 'package:mylob_app/widgets/hotel_widget/hotel_card.dart';
 

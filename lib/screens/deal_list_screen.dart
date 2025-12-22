@@ -24,7 +24,8 @@ class _DealListScreenState extends State<DealListScreen> {
   }
 
   void _listenToDeals() {
-    _dealSub = DealService.streamDeals(widget.hotelId).listen((dealList) {
+    _dealSub =
+        DealService.streamDealsByHotel(widget.hotelId).listen((dealList) {
       if (!mounted) return;
       setState(() {
         deals = dealList;

@@ -30,7 +30,8 @@ class _CityScreenState extends State<CityScreen> {
 
   void _listenToStreams() {
     // ✅ Listen to hotels in this city
-    _hotelSub = HotelService.streamHotels(widget.cityId).listen((hotelList) {
+    _hotelSub =
+        HotelService.streamHotelsByCity(widget.cityId).listen((hotelList) {
       setState(() {
         hotels = hotelList;
       });

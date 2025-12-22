@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:mylob_app/services/deal_service.js' as DealService;
+import 'package:mylob_app/services/deal_service.dart';
 import 'package:mylob_app/services/hotel_service.dart';
 import 'package:mylob_app/widgets/hotel_widget/deal_card.dart';
 import 'package:mylob_app/widgets/hotel_widget/hotel_info_widget.dart';

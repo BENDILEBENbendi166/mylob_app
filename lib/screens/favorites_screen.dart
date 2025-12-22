@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:mylob_app/services/city_service.js' as CityService;
-import 'package:mylob_app/services/hotel_service.js' as HotelService;
+import 'package:mylob_app/services/city_service.dart';
+import 'package:mylob_app/services/hotel_service.dart';
 import 'package:mylob_app/widgets/hotel_widget/hotel_card.dart';
 import 'package:mylob_app/utils/responsive.dart';
 
@@ -24,14 +24,14 @@ class _FavoritesScreenState extends State<FavoritesScreen> {
 
   Future<void> _loadFavorites() async {
     final allHotels = await HotelService.fetchHotels();
+    // ignore: unused_local_variable
     final allCities = await CityService.fetchCitiesFirestore();
 
     // ✅ Simulate favorites (first 5)
     final favs = allHotels.take(5).toList();
 
     setState(() {
-      favorites = favs as List<Map<String, dynamic>>;
-      cities = allCities as List<Map<String, dynamic>>;
+      favorites = favs;
       isLoading = false;
     });
   }
