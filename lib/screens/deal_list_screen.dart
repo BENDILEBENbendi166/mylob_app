@@ -65,7 +65,15 @@ class _DealListScreenState extends State<DealListScreen> {
       itemCount: deals.length,
       separatorBuilder: (_, __) => const SizedBox(height: 12),
       itemBuilder: (context, index) {
-        return DealCard(deal: deals[index]);
+        final deal = deals[index];
+        // Replace the following with actual hotel and city data as needed
+        final hotel = deal['hotel'];
+        final city = deal['city'];
+        return DealCard(
+          deal: deal,
+          hotel: hotel,
+          city: city,
+        );
       },
     );
   }
