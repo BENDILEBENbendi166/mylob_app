@@ -42,9 +42,16 @@ class _HomeScreenState extends State<HomeScreen> {
 
   Future<void> _fetchData() async {
     try {
-      final fetchedHotels = await HotelService.fetchHotels();
-      final fetchedDeals = await DealService.fetchAllDeals();
-      final fetchedCities = await CityService.fetchCitiesFirestore();
+      // ✅ Fetch all data in parallel for better performance
+      final results = await Future.wait([
+        HotelService.fetchHotels(),
+        DealService.fetchAllDeals(),
+        CityService.fetchCitiesFirestore(),
+      ]);
+
+      final fetchedHotels = results[0] as List<Map<String, dynamic>>;
+      final fetchedDeals = results[1] as List<Map<String, dynamic>>;
+      final fetchedCities = results[2] as List<Map<String, dynamic>>;
 
       if (!mounted) return; // ✅ prevents setState after dispose
 
@@ -61,9 +68,17 @@ class _HomeScreenState extends State<HomeScreen> {
           return currDiscount > nextDiscount ? curr : next;
         });
         
-        // Fetch hotel for the top deal
+        // Fetch hotel for the top deal - find in already fetched hotels
         if (processedTopDeal['hotelId'] != null) {
-          processedTopDealHotel = await HotelService.fetchHotelById(processedTopDeal['hotelId']);
+          processedTopDealHotel = fetchedHotels.firstWhere(
+            (hotel) => hotel['id'] == processedTopDeal!['hotelId'],
+            orElse: () => {},
+          );
+          
+          // If not found in fetched hotels, fetch it separately
+          if (processedTopDealHotel.isEmpty) {
+            processedTopDealHotel = await HotelService.fetchHotelById(processedTopDeal['hotelId']);
+          }
         }
       }
 

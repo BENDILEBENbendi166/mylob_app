@@ -66,6 +66,14 @@ class HomeDealsSection extends StatelessWidget {
       );
     }
 
+    // ✅ Create a map for O(1) city lookups to avoid O(n²) complexity
+    final cityMap = <String, Map<String, dynamic>>{};
+    for (final city in cities) {
+      if (city['name'] != null) {
+        cityMap[city['name']] = city;
+      }
+    }
+
     return GridView.builder(
       shrinkWrap: true,
       physics: const NeverScrollableScrollPhysics(),
@@ -75,15 +83,12 @@ class HomeDealsSection extends StatelessWidget {
       itemBuilder: (_, index) {
         final hotel = hotels[index];
 
-        final city = cities.firstWhere(
-          (c) => c['name'] == hotel['city'],
-          orElse: () => {
-            'id': 'unknown',
-            'name': hotel['city'],
-            'popularAttractions': [],
-            'imageUrl': '',
-          },
-        );
+        final city = cityMap[hotel['city']] ?? {
+          'id': 'unknown',
+          'name': hotel['city'],
+          'popularAttractions': [],
+          'imageUrl': '',
+        };
 
         return HotelCard(
           hotel: hotel,
