@@ -16,13 +16,16 @@ class SeedValidator {
     for (final city in data['cities']) {
       await _check('assets/images/cities/${city['imageUrl']}');
     }
+
+    print("✅ All assets validated successfully.");
   }
 
-  static Future<void> _check(String path) async {
+  static Future<void> _check(String path, {bool strict = true}) async {
     try {
       await rootBundle.load(path);
     } catch (_) {
-      throw Exception("❌ Missing asset: $path");
+      if (strict) throw Exception("❌ Missing asset: $path");
+      print("⚠️ Missing asset: $path");
     }
   }
 }

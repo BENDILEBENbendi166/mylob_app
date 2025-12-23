@@ -20,7 +20,7 @@ class DefaultFirebaseOptions {
       case TargetPlatform.iOS:
       case TargetPlatform.macOS:
         return const FirebaseOptions(
-          apiKey: "AIzaSyAY3gwbiFp6BSdGYtmHyhiE2jpwRErTcko",
+          apiKey: "...",
           appId: "1:879373771868:web:fc31d3f6a898562bb97299",
           messagingSenderId: "879373771868",
           projectId: "mylob-ba4b4",

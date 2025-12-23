@@ -2,8 +2,14 @@ import 'package:flutter/material.dart';
 import 'package:mylob_app/main.dart';
 
 class CustomNavBar extends StatelessWidget implements PreferredSizeWidget {
-  const CustomNavBar(
-      {super.key, required Color backgroundColor, required Color iconColor});
+  final Color backgroundColor;
+  final Color iconColor;
+
+  const CustomNavBar({
+    super.key,
+    required this.backgroundColor,
+    required this.iconColor,
+  });
 
   @override
   Size get preferredSize => const Size.fromHeight(60);
@@ -11,12 +17,12 @@ class CustomNavBar extends StatelessWidget implements PreferredSizeWidget {
   @override
   Widget build(BuildContext context) {
     final width = MediaQuery.of(context).size.width;
-    final isWide = width > 1100;
+    final isWide = width > 900;
 
     return AppBar(
-      automaticallyImplyLeading: !isWide, // ✅ hamburger only on mobile/tablet
-      iconTheme: const IconThemeData(color: Colors.white),
-
+      backgroundColor: backgroundColor,
+      iconTheme: IconThemeData(color: iconColor),
+      automaticallyImplyLeading: !isWide,
       flexibleSpace: Container(
         decoration: const BoxDecoration(
           gradient: LinearGradient(
@@ -29,9 +35,7 @@ class CustomNavBar extends StatelessWidget implements PreferredSizeWidget {
           ),
         ),
       ),
-
       elevation: 0,
-
       title: InkWell(
         onTap: () => Navigator.pushNamed(context, '/'),
         child: const Text(
@@ -43,8 +47,6 @@ class CustomNavBar extends StatelessWidget implements PreferredSizeWidget {
           ),
         ),
       ),
-
-      // ✅ Desktop/tablet actions
       actions: isWide
           ? [
               const _LanguageToggle(),
@@ -62,7 +64,7 @@ class CustomNavBar extends StatelessWidget implements PreferredSizeWidget {
               ),
               const SizedBox(width: 12),
             ]
-          : null, // ✅ Mobile/tablet → actions hidden (drawer used instead)
+          : null,
     );
   }
 }
@@ -70,10 +72,8 @@ class CustomNavBar extends StatelessWidget implements PreferredSizeWidget {
 class _TopAction extends StatelessWidget {
   final String label;
   final VoidCallback onPressed;
-  final IconData? icon;
 
-  // ignore: unused_element_parameter
-  const _TopAction(this.label, {required this.onPressed, this.icon});
+  const _TopAction(this.label, {required this.onPressed});
 
   @override
   Widget build(BuildContext context) {
@@ -89,7 +89,6 @@ class _TopAction extends StatelessWidget {
           ),
         ),
         onPressed: onPressed,
-        icon: icon != null ? Icon(icon, size: 18) : const SizedBox.shrink(),
         label: Text(
           label,
           style: const TextStyle(
@@ -113,7 +112,7 @@ class _LanguageToggle extends StatelessWidget {
       onPressed: () {
         final newLocale =
             locale == 'en' ? const Locale('tr') : const Locale('en');
-        myLob.setLocale(context, newLocale);
+        MyLob.setLocale(context, newLocale);
       },
       child: Text(
         locale == 'en' ? 'Türkçe' : 'English',

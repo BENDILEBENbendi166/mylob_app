@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:go_router/go_router.dart';
+import 'package:mylob_app/firebase_options.dart';
 import 'package:mylob_app/pages/city_page.dart';
 import 'package:mylob_app/pages/city_list_page.dart';
 import 'package:mylob_app/pages/deal_list_page.dart';
@@ -12,20 +13,34 @@ import 'package:mylob_app/pages/profile_page.dart';
 import 'package:mylob_app/pages/reservation_page.dart';
 import 'package:mylob_app/pages/settings_page.dart';
 import 'package:mylob_app/pages/signup_page.dart';
-
-import 'firebase_options.dart';
+import 'package:mylob_app/services/seed/seed_orchestrator.dart';
+import 'package:mylob_app/services/seed/seed_validator.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
-  runApp(const myLob());
+
+  print("🚀 Starting Firestore seeding...");
+
+  try {
+    print("🔍 Validating assets...");
+    await SeedValidator.validateAll();
+    print("✅ Assets validated.");
+
+    print("📦 Seeding Firestore data...");
+    await seedAll();
+    print("🎉 Seeding completed successfully!");
+  } catch (e) {
+    print("❌ Seeding failed: $e");
+  }
+
+  runApp(const MyLob());
 }
 
-// ignore: camel_case_types
-class myLob extends StatelessWidget {
-  const myLob({super.key});
+class MyLob extends StatelessWidget {
+  const MyLob({super.key});
 
   @override
   Widget build(BuildContext context) {
