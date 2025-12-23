@@ -13,6 +13,7 @@ import 'package:mylob_app/pages/profile_page.dart';
 import 'package:mylob_app/pages/reservation_page.dart';
 import 'package:mylob_app/pages/settings_page.dart';
 import 'package:mylob_app/pages/signup_page.dart';
+import 'package:mylob_app/ui/theme.dart';
 // import 'package:mylob_app/services/seed/seed_orchestrator.dart';
 // import 'package:mylob_app/services/seed/seed_validator.dart';
 
@@ -94,13 +95,9 @@ class MyLob extends StatelessWidget {
 
     return MaterialApp.router(
       title: 'Lobideyim',
-      theme: ThemeData(
-        fontFamily: 'Montserrat',
-        colorScheme: ColorScheme.fromSeed(
-          seedColor: const Color.fromARGB(255, 38, 56, 134),
-        ),
-        useMaterial3: true,
-      ),
+      theme: AppTheme.lightTheme,
+      darkTheme: AppTheme.darkTheme,
+      themeMode: ThemeMode.system,
       debugShowCheckedModeBanner: false,
       routerConfig: router,
     );
