@@ -89,7 +89,9 @@ class _BookingScreenState extends State<BookingScreen> {
   }
 
   String _generateReservationCode() {
-    final random = Random();
+    // Use timestamp to ensure uniqueness
+    final timestamp = DateTime.now().millisecondsSinceEpoch;
+    final random = Random(timestamp); // Seed with timestamp for better randomness
     final letters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
     final numbers = '0123456789';
     
@@ -129,17 +131,17 @@ class _BookingScreenState extends State<BookingScreen> {
       final reservationData = {
         'code': reservationCode,
         'dealId': widget.dealId,
-        'hotelId': hotel!['id'],
-        'hotelName': hotel!['name'],
-        'cityName': city?['name'] ?? hotel!['city'],
+        'hotelId': hotel!['id'] ?? deal!['hotelId'], // Fallback to deal's hotelId
+        'hotelName': hotel!['name'] ?? 'Unknown Hotel',
+        'cityName': city?['name'] ?? hotel!['city'] ?? 'Unknown City',
         'guestName': _nameController.text.trim(),
         'guestEmail': _emailController.text.trim(),
         'guestPhone': _phoneController.text.trim(),
         'checkIn': checkInDate.toIso8601String(),
         'checkOut': checkOutDate.toIso8601String(),
-        'totalPrice': deal!['finalPrice'],
-        'category': deal!['category'],
-        'discountPercent': deal!['discountPercent'],
+        'totalPrice': deal!['finalPrice'] ?? 0,
+        'category': deal!['category'] ?? 'Special Deal',
+        'discountPercent': deal!['discountPercent'] ?? 0,
         'paymentMethod': 'Pay at Hotel',
         'status': 'confirmed',
         'createdAt': DateTime.now().toIso8601String(),

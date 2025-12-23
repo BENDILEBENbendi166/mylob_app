@@ -156,9 +156,13 @@ class _GuestFormState extends State<GuestForm> {
                   if (value == null || value.trim().isEmpty) {
                     return 'Please enter your phone number';
                   }
+                  final trimmedValue = value.trim();
+                  if (trimmedValue.length < 10) {
+                    return 'Phone number must be at least 10 digits';
+                  }
                   final phoneRegex = RegExp(r'^\+?[\d\s\-()]+$');
-                  if (!phoneRegex.hasMatch(value.trim()) || value.trim().length < 10) {
-                    return 'Please enter a valid phone number';
+                  if (!phoneRegex.hasMatch(trimmedValue)) {
+                    return 'Phone number can only contain digits, spaces, +, -, ()';
                   }
                   return null;
                 },
