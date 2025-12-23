@@ -60,11 +60,9 @@ class HotelCard extends StatelessWidget {
   // REAL CARD
   // ---------------------------------------------------------
   Widget _buildRealCard(BuildContext context) {
-    // ignore: unused_local_variable
-    final imageUrl = safeAssetImage(
-        hotel?['photoUrls'] != null && hotel!['photoUrls'].isNotEmpty
-            ? hotel!['photoUrls'][0]
-            : 'c1.jpg');
+    final imageUrl = hotel?['photoUrls'] != null && hotel!['photoUrls'].isNotEmpty
+        ? hotel!['photoUrls'][0]
+        : 'c1.jpg';
     final price = hotel!['basePrice'];
     final stars = hotel!['stars'];
     final cityName = city!['name'];
@@ -92,7 +90,7 @@ class HotelCard extends StatelessWidget {
               // BACKGROUND IMAGE
               // ---------------------------------------------------------
               safeAssetImage(
-                hotel?['imageUrl'] ?? '',
+                imageUrl,
                 fit: BoxFit.cover,
               ),
 
