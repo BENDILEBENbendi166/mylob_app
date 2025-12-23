@@ -110,11 +110,11 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: const CustomNavBar(
+      appBar: CustomNavBar(
         backgroundColor: kBackgroundColor,
         iconColor: kIconColor,
       ),
-      drawer: const CustomDrawer(),
+      drawer: CustomDrawer(),
       body: SingleChildScrollView(
         physics: const BouncingScrollPhysics(),
         child: Column(
@@ -148,7 +148,7 @@ class _HomeScreenState extends State<HomeScreen> {
             ),
             const SizedBox(height: 48),
 
-            const WhySection(),
+            WhySection(),
             const SizedBox(height: 60),
 
             // 5. RecommendedHotelsSection - Top-rated hotels
@@ -169,10 +169,10 @@ class _HomeScreenState extends State<HomeScreen> {
 
             const SizedBox(height: 60),
 
-            const ExploreButton(),
+            ExploreButton(),
             const SizedBox(height: 60),
 
-            const FooterScreen(),
+            FooterScreen(),
           ],
         ),
       ),

@@ -4,5 +4,5 @@ import 'package:mylob_app/screens/settings_screen.dart';
 class SettingsPage extends StatelessWidget {
   const SettingsPage({super.key});
   @override
-  Widget build(BuildContext context) => const SettingsScreen();
+  Widget build(BuildContext context) => SettingsScreen();
 }

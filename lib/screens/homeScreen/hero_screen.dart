@@ -62,7 +62,7 @@ class HeroScreen extends StatelessWidget {
                     children: [
                       Expanded(child: HeroText(r: r, cityName: featuredCity?['name'])),
                       SizedBox(width: r.spacing * 2),
-                      SizedBox(width: 350, child: const HeroSearchBar()),
+                      const SizedBox(width: 350, child: HeroSearchBar()),
                     ],
                   )
                 : Column(
@@ -70,7 +70,7 @@ class HeroScreen extends StatelessWidget {
                     children: [
                       HeroText(r: r, cityName: featuredCity?['name']),
                       SizedBox(height: r.spacing),
-                      const HeroSearchBar(),
+                      HeroSearchBar(),
                     ],
                   ),
           ),
