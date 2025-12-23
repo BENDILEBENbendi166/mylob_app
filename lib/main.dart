@@ -69,6 +69,11 @@ class MyLob extends StatelessWidget {
           path: '/hotels/:id',
           builder: (_, state) => HotelPage(id: state.pathParameters['id']!),
         ),
+        // Redirect old hotel route for backward compatibility
+        GoRoute(
+          path: '/hotel/:id',
+          redirect: (_, state) => '/hotels/${state.pathParameters['id']}',
+        ),
 
         // ✅ Deals (by hotel - list view)
         GoRoute(
