@@ -62,7 +62,7 @@ class HeroScreen extends StatelessWidget {
                     children: [
                       Expanded(child: HeroText(r: r, cityName: featuredCity?['name'])),
                       SizedBox(width: r.spacing * 2),
-                      const SizedBox(width: 350, child: HeroSearchBar()),
+                      SizedBox(width: 350, child: const HeroSearchBar()),
                     ],
                   )
                 : Column(
