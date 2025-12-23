@@ -12,6 +12,9 @@ import 'package:mylob_app/screens/homeScreen/city_spotlight_carousel.dart';
 import 'package:mylob_app/screens/homeScreen/deal_of_the_day.dart';
 import 'package:mylob_app/screens/homeScreen/last_minute_deals_section.dart';
 import 'package:mylob_app/screens/homeScreen/recommended_hotels_section.dart';
+import 'package:mylob_app/screens/city/widgets/city_hero.dart';
+import 'package:mylob_app/screens/city/widgets/attractions_grid.dart';
+import 'package:mylob_app/screens/city/widgets/hotels_list.dart';
 
 void main() {
   testWidgets('HomeScreen smoke test', (WidgetTester tester) async {
@@ -162,5 +165,150 @@ void main() {
     expect(find.text('Luxury Hotel'), findsOneWidget);
     expect(find.text('Grand Hotel'), findsOneWidget);
     expect(find.text('50% OFF'), findsOneWidget);
+  });
+
+  // City Screen Widget Tests
+  testWidgets('CityHero renders with loading state', (WidgetTester tester) async {
+    await tester.pumpWidget(
+      const MaterialApp(
+        home: Scaffold(
+          body: CityHero(
+            city: null,
+            isLoading: true,
+          ),
+        ),
+      ),
+    );
+
+    // Wait for rendering
+    await tester.pumpAndSettle();
+
+    // Verify skeleton is present
+    expect(find.byType(Icon), findsOneWidget);
+  });
+
+  testWidgets('CityHero displays city information', (WidgetTester tester) async {
+    final testCity = {
+      'name': 'London',
+      'country': 'United Kingdom',
+      'imageUrl': 'london.jpg',
+    };
+
+    await tester.pumpWidget(
+      MaterialApp(
+        home: Scaffold(
+          body: CityHero(
+            city: testCity,
+            isLoading: false,
+          ),
+        ),
+      ),
+    );
+
+    // Wait for rendering
+    await tester.pumpAndSettle();
+
+    // Verify city information is displayed
+    expect(find.text('London'), findsOneWidget);
+    expect(find.text('United Kingdom'), findsOneWidget);
+  });
+
+  testWidgets('PopularAttractionsGrid renders with loading state', (WidgetTester tester) async {
+    await tester.pumpWidget(
+      const MaterialApp(
+        home: Scaffold(
+          body: PopularAttractionsGrid(
+            attractions: [],
+            isLoading: true,
+          ),
+        ),
+      ),
+    );
+
+    // Verify the title is present
+    expect(find.text('Popular Attractions'), findsOneWidget);
+  });
+
+  testWidgets('PopularAttractionsGrid displays attractions', (WidgetTester tester) async {
+    final testAttractions = [
+      {'name': 'Big Ben', 'latitude': 51.5007, 'longitude': -0.1246},
+      {'name': 'Tower Bridge', 'latitude': 51.5055, 'longitude': -0.0754},
+    ];
+
+    await tester.pumpWidget(
+      MaterialApp(
+        home: Scaffold(
+          body: PopularAttractionsGrid(
+            attractions: testAttractions,
+            isLoading: false,
+          ),
+        ),
+      ),
+    );
+
+    // Wait for rendering
+    await tester.pumpAndSettle();
+
+    // Verify attractions are displayed
+    expect(find.text('Big Ben'), findsOneWidget);
+    expect(find.text('Tower Bridge'), findsOneWidget);
+  });
+
+  testWidgets('PopularAttractionsGrid shows empty state', (WidgetTester tester) async {
+    await tester.pumpWidget(
+      const MaterialApp(
+        home: Scaffold(
+          body: PopularAttractionsGrid(
+            attractions: [],
+            isLoading: false,
+          ),
+        ),
+      ),
+    );
+
+    // Wait for rendering
+    await tester.pumpAndSettle();
+
+    // Verify empty state message
+    expect(find.text('No attractions available'), findsOneWidget);
+  });
+
+  testWidgets('HotelsInCityList renders with loading state', (WidgetTester tester) async {
+    await tester.pumpWidget(
+      const MaterialApp(
+        home: Scaffold(
+          body: HotelsInCityList(
+            hotels: [],
+            city: null,
+            isLoading: true,
+          ),
+        ),
+      ),
+    );
+
+    // Verify the title is present (with "this city" as fallback)
+    expect(find.textContaining('Hotels in'), findsOneWidget);
+  });
+
+  testWidgets('HotelsInCityList shows empty state', (WidgetTester tester) async {
+    final testCity = {'name': 'Paris'};
+
+    await tester.pumpWidget(
+      MaterialApp(
+        home: Scaffold(
+          body: HotelsInCityList(
+            hotels: [],
+            city: testCity,
+            isLoading: false,
+          ),
+        ),
+      ),
+    );
+
+    // Wait for rendering
+    await tester.pumpAndSettle();
+
+    // Verify empty state message
+    expect(find.text('No hotels found in this city'), findsOneWidget);
   });
 }
