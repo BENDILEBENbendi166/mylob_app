@@ -3,15 +3,25 @@ import 'package:mylob_app/utils/responsive.dart';
 
 class HeroText extends StatelessWidget {
   final Responsive r;
-  const HeroText({super.key, required this.r});
+  final String? cityName;
+  
+  const HeroText({
+    super.key,
+    required this.r,
+    this.cityName,
+  });
 
   @override
   Widget build(BuildContext context) {
+    final String tagline = cityName != null 
+        ? 'Discover $cityName'
+        : 'Catch last-minute room deals!';
+    
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Text(
-          'Catch last-minute room deals!',
+          tagline,
           style: TextStyle(
             color: Colors.white.withOpacity(0.95),
             fontWeight: FontWeight.w600,

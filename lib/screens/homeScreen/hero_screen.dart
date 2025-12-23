@@ -2,9 +2,17 @@ import 'package:flutter/material.dart';
 import 'package:mylob_app/screens/homeScreen/hero_search_bar.dart';
 import 'package:mylob_app/screens/homeScreen/hero_text.dart';
 import 'package:mylob_app/utils/responsive.dart';
+import 'package:mylob_app/utils/image_path.dart';
 
 class HeroScreen extends StatelessWidget {
-  const HeroScreen({super.key});
+  final Map<String, dynamic>? featuredCity;
+  final bool isLoading;
+
+  const HeroScreen({
+    super.key,
+    this.featuredCity,
+    this.isLoading = false,
+  });
 
   double _heroHeight(Responsive r) {
     if (r.isMobile) return 320;
@@ -22,12 +30,8 @@ class HeroScreen extends StatelessWidget {
       child: Stack(
         fit: StackFit.expand,
         children: [
-          // ✅ Background image
-          Image.asset(
-            'assets/images/hero.jpg',
-            fit: BoxFit.cover,
-            alignment: Alignment.center,
-          ),
+          // ✅ Background image - use featured city image if available
+          _buildBackgroundImage(),
 
           // ✅ Gradient overlay
           Container(
@@ -56,7 +60,7 @@ class HeroScreen extends StatelessWidget {
                 ? Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      Expanded(child: HeroText(r: r)),
+                      Expanded(child: HeroText(r: r, cityName: featuredCity?['name'])),
                       SizedBox(width: r.spacing * 2),
                       const SizedBox(width: 350, child: HeroSearchBar()),
                     ],
@@ -64,7 +68,7 @@ class HeroScreen extends StatelessWidget {
                 : Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      HeroText(r: r),
+                      HeroText(r: r, cityName: featuredCity?['name']),
                       SizedBox(height: r.spacing),
                       const HeroSearchBar(),
                     ],
@@ -72,6 +76,29 @@ class HeroScreen extends StatelessWidget {
           ),
         ],
       ),
+    );
+  }
+
+  Widget _buildBackgroundImage() {
+    if (isLoading) {
+      return Container(
+        color: Colors.grey[300],
+      );
+    }
+
+    // Use featured city image if available, otherwise use default
+    if (featuredCity != null && featuredCity!['imageUrl'] != null && featuredCity!['imageUrl'].toString().isNotEmpty) {
+      return safeAssetImage(
+        featuredCity!['imageUrl'],
+        fit: BoxFit.cover,
+      );
+    }
+
+    // Fallback to default hero image
+    return Image.asset(
+      'assets/images/hero.jpg',
+      fit: BoxFit.cover,
+      alignment: Alignment.center,
     );
   }
 }
