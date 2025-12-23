@@ -21,6 +21,9 @@ import 'package:mylob_app/screens/hotel/widgets/deals_list.dart';
 import 'package:mylob_app/screens/deal/widgets/deal_hero.dart';
 import 'package:mylob_app/screens/deal/widgets/deal_info.dart';
 import 'package:mylob_app/screens/deal/widgets/book_button.dart';
+import 'package:mylob_app/screens/booking/widgets/booking_summary.dart';
+import 'package:mylob_app/screens/booking/widgets/guest_form.dart';
+import 'package:mylob_app/screens/booking/widgets/confirm_button.dart';
 
 void main() {
   testWidgets('HomeScreen smoke test', (WidgetTester tester) async {
@@ -645,5 +648,170 @@ void main() {
 
     // Verify sold out text is present
     expect(find.text('Sold Out'), findsOneWidget);
+  });
+
+  // Booking Screen Widget Tests
+  testWidgets('BookingSummary renders with loading state', (WidgetTester tester) async {
+    await tester.pumpWidget(
+      const MaterialApp(
+        home: Scaffold(
+          body: BookingSummary(
+            deal: null,
+            hotel: null,
+            city: null,
+            isLoading: true,
+          ),
+        ),
+      ),
+    );
+
+    // Verify the title is present
+    expect(find.text('Booking Summary'), findsOneWidget);
+  });
+
+  testWidgets('BookingSummary displays booking information', (WidgetTester tester) async {
+    final testHotel = {
+      'name': 'Luxury Hotel',
+      'district': 'Downtown',
+    };
+
+    final testDeal = {
+      'category': 'Weekend Special',
+      'discountPercent': 40,
+      'finalPrice': 120,
+      'date': DateTime.now(),
+    };
+
+    final testCity = {
+      'name': 'London',
+    };
+
+    await tester.pumpWidget(
+      MaterialApp(
+        home: Scaffold(
+          body: BookingSummary(
+            deal: testDeal,
+            hotel: testHotel,
+            city: testCity,
+            isLoading: false,
+          ),
+        ),
+      ),
+    );
+
+    // Wait for rendering
+    await tester.pumpAndSettle();
+
+    // Verify booking information is displayed
+    expect(find.text('Luxury Hotel'), findsOneWidget);
+    expect(find.text('Weekend Special'), findsOneWidget);
+    expect(find.text('£120'), findsOneWidget);
+  });
+
+  testWidgets('GuestForm validates required fields', (WidgetTester tester) async {
+    final formKey = GlobalKey<FormState>();
+    final nameController = TextEditingController();
+    final emailController = TextEditingController();
+    final phoneController = TextEditingController();
+
+    await tester.pumpWidget(
+      MaterialApp(
+        home: Scaffold(
+          body: GuestForm(
+            formKey: formKey,
+            nameController: nameController,
+            emailController: emailController,
+            phoneController: phoneController,
+            isLoading: false,
+          ),
+        ),
+      ),
+    );
+
+    // Wait for rendering
+    await tester.pumpAndSettle();
+
+    // Verify form title is present
+    expect(find.text('Guest Details'), findsOneWidget);
+    
+    // Verify input fields are present
+    expect(find.text('Full Name'), findsOneWidget);
+    expect(find.text('Email Address'), findsOneWidget);
+    expect(find.text('Phone Number'), findsOneWidget);
+  });
+
+  testWidgets('ConfirmButton renders correctly', (WidgetTester tester) async {
+    final testDeal = {
+      'finalPrice': 150,
+    };
+
+    await tester.pumpWidget(
+      MaterialApp(
+        home: Scaffold(
+          body: ConfirmButton(
+            deal: testDeal,
+            isLoading: false,
+            onPressed: () {},
+          ),
+        ),
+      ),
+    );
+
+    // Wait for rendering
+    await tester.pumpAndSettle();
+
+    // Verify button text with price is present
+    expect(find.textContaining('Confirm Booking'), findsOneWidget);
+    expect(find.textContaining('£150'), findsOneWidget);
+  });
+
+  testWidgets('ConfirmButton shows payment options', (WidgetTester tester) async {
+    final testDeal = {
+      'finalPrice': 100,
+    };
+
+    await tester.pumpWidget(
+      MaterialApp(
+        home: Scaffold(
+          body: ConfirmButton(
+            deal: testDeal,
+            isLoading: false,
+            onPressed: () {},
+          ),
+        ),
+      ),
+    );
+
+    // Wait for rendering
+    await tester.pumpAndSettle();
+
+    // Verify payment options are displayed
+    expect(find.text('Payment Options'), findsOneWidget);
+    expect(find.text('Pay at Hotel'), findsOneWidget);
+    expect(find.text('Credit Card'), findsOneWidget);
+  });
+
+  testWidgets('ConfirmButton shows loading state', (WidgetTester tester) async {
+    final testDeal = {
+      'finalPrice': 100,
+    };
+
+    await tester.pumpWidget(
+      MaterialApp(
+        home: Scaffold(
+          body: ConfirmButton(
+            deal: testDeal,
+            isLoading: true,
+            onPressed: () {},
+          ),
+        ),
+      ),
+    );
+
+    // Wait for rendering
+    await tester.pumpAndSettle();
+
+    // Verify loading indicator is present
+    expect(find.byType(CircularProgressIndicator), findsOneWidget);
   });
 }
