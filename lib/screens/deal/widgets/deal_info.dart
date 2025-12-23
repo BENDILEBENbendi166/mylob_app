@@ -105,7 +105,7 @@ class DealInfo extends StatelessWidget {
             const SizedBox(height: 12),
             _buildPriceRow(
               'Discount ($discountPercent%)',
-              '-£${(basePrice * discountPercent / 100).toStringAsFixed(2)}',
+              '-£${basePrice > 0 ? (basePrice * discountPercent / 100).toStringAsFixed(2) : '0.00'}',
               false,
               color: Colors.red,
             ),
@@ -244,6 +244,42 @@ class DealInfo extends StatelessWidget {
   }
 
   Widget _buildRoomsLeftBadge(int availableRooms) {
+    // Handle sold out case
+    if (availableRooms == 0) {
+      return Container(
+        padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+        decoration: BoxDecoration(
+          color: Colors.grey.shade200,
+          borderRadius: BorderRadius.circular(12),
+          border: Border.all(
+            color: Colors.grey.shade400,
+            width: 2,
+          ),
+        ),
+        child: Row(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            Icon(
+              Icons.cancel,
+              color: Colors.grey.shade700,
+              size: 24,
+            ),
+            const SizedBox(width: 12),
+            Expanded(
+              child: Text(
+                'Sold Out',
+                style: TextStyle(
+                  fontSize: 18,
+                  fontWeight: FontWeight.bold,
+                  color: Colors.grey.shade900,
+                ),
+              ),
+            ),
+          ],
+        ),
+      );
+    }
+
     final isUrgent = availableRooms <= 3;
     
     return Container(

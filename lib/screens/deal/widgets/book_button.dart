@@ -29,8 +29,9 @@ class _BookButtonState extends State<BookButton> {
       _isBooking = true;
     });
 
-    // Simulate booking process
-    await Future.delayed(const Duration(milliseconds: 800));
+    // Brief delay for visual feedback
+    // In production, this would be replaced by actual API call
+    await Future.delayed(const Duration(milliseconds: 500));
 
     if (!mounted) return;
 
