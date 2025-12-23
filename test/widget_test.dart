@@ -18,6 +18,9 @@ import 'package:mylob_app/screens/city/widgets/hotels_list.dart';
 import 'package:mylob_app/screens/hotel/widgets/hotel_hero.dart';
 import 'package:mylob_app/screens/hotel/widgets/hotel_info.dart';
 import 'package:mylob_app/screens/hotel/widgets/deals_list.dart';
+import 'package:mylob_app/screens/deal/widgets/deal_hero.dart';
+import 'package:mylob_app/screens/deal/widgets/deal_info.dart';
+import 'package:mylob_app/screens/deal/widgets/book_button.dart';
 
 void main() {
   testWidgets('HomeScreen smoke test', (WidgetTester tester) async {
@@ -471,5 +474,176 @@ void main() {
     expect(find.text('Weekend Special'), findsOneWidget);
     expect(find.text('30% OFF'), findsOneWidget);
     expect(find.text('£105'), findsOneWidget);
+  });
+
+  // Deal Screen Widget Tests
+  testWidgets('DealHero renders with loading state', (WidgetTester tester) async {
+    await tester.pumpWidget(
+      const MaterialApp(
+        home: Scaffold(
+          body: DealHero(
+            hotel: null,
+            deal: null,
+            isLoading: true,
+          ),
+        ),
+      ),
+    );
+
+    // Wait for rendering
+    await tester.pumpAndSettle();
+
+    // Verify skeleton is present
+    expect(find.byType(DealHero), findsOneWidget);
+  });
+
+  testWidgets('DealHero displays discount badge', (WidgetTester tester) async {
+    final testHotel = {
+      'name': 'Luxury Hotel',
+      'photoUrls': ['c1.jpg'],
+    };
+
+    final testDeal = {
+      'category': 'Flash Sale',
+      'discountPercent': 50,
+    };
+
+    await tester.pumpWidget(
+      MaterialApp(
+        home: Scaffold(
+          body: DealHero(
+            hotel: testHotel,
+            deal: testDeal,
+            isLoading: false,
+          ),
+        ),
+      ),
+    );
+
+    // Wait for rendering
+    await tester.pumpAndSettle();
+
+    // Verify hotel name and discount are displayed
+    expect(find.text('Luxury Hotel'), findsOneWidget);
+    expect(find.text('50%'), findsOneWidget);
+    expect(find.text('OFF'), findsOneWidget);
+  });
+
+  testWidgets('DealInfo renders with loading state', (WidgetTester tester) async {
+    await tester.pumpWidget(
+      const MaterialApp(
+        home: Scaffold(
+          body: DealInfo(
+            deal: null,
+            hotel: null,
+            city: null,
+            isLoading: true,
+          ),
+        ),
+      ),
+    );
+
+    // Verify the title is present
+    expect(find.text('Deal Breakdown'), findsOneWidget);
+  });
+
+  testWidgets('DealInfo displays deal breakdown', (WidgetTester tester) async {
+    final testHotel = {
+      'name': 'Grand Hotel',
+      'basePrice': 200,
+      'district': 'Downtown',
+    };
+
+    final testDeal = {
+      'category': 'Last Minute',
+      'discountPercent': 40,
+      'finalPrice': 120,
+      'date': DateTime.now(),
+      'availableRooms': 2,
+      'activeAfter18': true,
+    };
+
+    final testCity = {
+      'name': 'London',
+    };
+
+    await tester.pumpWidget(
+      MaterialApp(
+        home: Scaffold(
+          body: DealInfo(
+            deal: testDeal,
+            hotel: testHotel,
+            city: testCity,
+            isLoading: false,
+          ),
+        ),
+      ),
+    );
+
+    // Wait for rendering
+    await tester.pumpAndSettle();
+
+    // Verify deal information is displayed
+    expect(find.text('Last Minute'), findsOneWidget);
+    expect(find.text('£120'), findsOneWidget);
+    expect(find.text('2 rooms left'), findsOneWidget);
+  });
+
+  testWidgets('BookButton renders correctly', (WidgetTester tester) async {
+    final testDeal = {
+      'finalPrice': 99,
+      'availableRooms': 5,
+    };
+
+    final testHotel = {
+      'name': 'Test Hotel',
+    };
+
+    await tester.pumpWidget(
+      MaterialApp(
+        home: Scaffold(
+          body: BookButton(
+            deal: testDeal,
+            hotel: testHotel,
+            isLoading: false,
+          ),
+        ),
+      ),
+    );
+
+    // Wait for rendering
+    await tester.pumpAndSettle();
+
+    // Verify button text is present
+    expect(find.text('Book Now'), findsOneWidget);
+  });
+
+  testWidgets('BookButton shows sold out when no rooms', (WidgetTester tester) async {
+    final testDeal = {
+      'finalPrice': 99,
+      'availableRooms': 0,
+    };
+
+    final testHotel = {
+      'name': 'Test Hotel',
+    };
+
+    await tester.pumpWidget(
+      MaterialApp(
+        home: Scaffold(
+          body: BookButton(
+            deal: testDeal,
+            hotel: testHotel,
+            isLoading: false,
+          ),
+        ),
+      ),
+    );
+
+    // Wait for rendering
+    await tester.pumpAndSettle();
+
+    // Verify sold out text is present
+    expect(find.text('Sold Out'), findsOneWidget);
   });
 }
