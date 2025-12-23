@@ -13,8 +13,8 @@ import 'package:mylob_app/pages/profile_page.dart';
 import 'package:mylob_app/pages/reservation_page.dart';
 import 'package:mylob_app/pages/settings_page.dart';
 import 'package:mylob_app/pages/signup_page.dart';
-import 'package:mylob_app/services/seed/seed_orchestrator.dart';
-import 'package:mylob_app/services/seed/seed_validator.dart';
+// import 'package:mylob_app/services/seed/seed_orchestrator.dart';
+// import 'package:mylob_app/services/seed/seed_validator.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -22,19 +22,19 @@ void main() async {
     options: DefaultFirebaseOptions.currentPlatform,
   );
 
-  print("🚀 Starting Firestore seeding...");
+  // print("🚀 Starting Firestore seeding...");
 
-  try {
-    print("🔍 Validating assets...");
-    await SeedValidator.validateAll();
-    print("✅ Assets validated.");
+  // try {
+  //   print("🔍 Validating assets...");
+  //   await SeedValidator.validateAll();
+  //   print("✅ Assets validated.");
 
-    print("📦 Seeding Firestore data...");
-    await seedAll();
-    print("🎉 Seeding completed successfully!");
-  } catch (e) {
-    print("❌ Seeding failed: $e");
-  }
+  //   print("📦 Seeding Firestore data...");
+  //   await seedAll();
+  //   print("🎉 Seeding completed successfully!");
+  // } catch (e) {
+  //   print("❌ Seeding failed: $e");
+  // }
 
   runApp(const MyLob());
 }

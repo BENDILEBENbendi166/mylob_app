@@ -21,7 +21,10 @@ Future<void> seedAll() async {
   // Cities
   // -------------------------
   final cities = data['cities'] as List<dynamic>;
+  print("📦 Seeding cities...");
   for (final cityMap in cities) {
+    print(" → City: ${cityMap['id']}");
+
     final city = City(
       id: cityMap['id'],
       name: cityMap['name'],
@@ -36,16 +39,17 @@ Future<void> seedAll() async {
       await writeCity(city);
     } catch (e) {
       print("❌ Failed to write city ${city.id}: $e");
-      print("📦 Seeding cities...");
-      for (final cityMap in cities) {
-        print(" → ${cityMap['id']}");
-        await writeCity(city);
-      }
     }
   }
 
+  // -------------------------
+  // Hotels
+  // -------------------------
   final hotels = data['hotels'] as List<dynamic>;
+  print("📦 Seeding hotels...");
   for (final hotelMap in hotels) {
+    print(" → Hotel: ${hotelMap['id']}");
+
     final hotel = Hotel(
       id: hotelMap['id'],
       name: hotelMap['name'],
@@ -62,17 +66,18 @@ Future<void> seedAll() async {
     try {
       await writeHotel(hotel);
     } catch (e) {
-      print("❌ Failed to write city ${hotel.id}: $e");
-      print("📦 Seeding hotels...");
-      for (final hotelMap in hotels) {
-        print(" → ${hotelMap['id']}");
-        await writeHotel(hotel);
-      }
+      print("❌ Failed to write hotel ${hotel.id}: $e");
     }
   }
 
+  // -------------------------
+  // Deals
+  // -------------------------
   final deals = data['deals'] as List<dynamic>;
+  print("📦 Seeding deals...");
   for (final dealMap in deals) {
+    print(" → Deal: ${dealMap['id']}");
+
     final deal = Deal(
       id: dealMap['id'],
       hotelId: dealMap['hotelId'],
@@ -83,16 +88,13 @@ Future<void> seedAll() async {
       activeAfter18: dealMap['activeAfter18'],
       date: DateTime.parse(dealMap['date']),
     );
+
     try {
       await writeDeal(deal);
     } catch (e) {
-      print("❌ Failed to write city ${deal.id}: $e");
-      print("📦 Seeding deals...");
-      for (final dealMap in deals) {
-        print(" → ${dealMap['id']}");
-        await writeDeal(deal);
-      }
+      print("❌ Failed to write deal ${deal.id}: $e");
     }
   }
+
   print("🎉 All seeding completed!");
 }

@@ -19,7 +19,7 @@
       "city": "London",
       "district": "Westminster",
         "latitude": 52.4081,
-  "longitude": -1.5106,
+        "longitude": -1.5106,
       "features": ["Free WiFi", "Restaurant", "Bar"],
       "basePrice": 180.0,
       "photoUrls": ["c2.jpg"]
