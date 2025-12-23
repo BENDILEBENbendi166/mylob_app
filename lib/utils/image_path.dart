@@ -1,6 +1,11 @@
 import 'package:flutter/material.dart';
 
 String assetImage(String filename) {
+  // If path already starts with assets/, return as-is
+  if (filename.startsWith('assets/')) {
+    return filename;
+  }
+  
   // Hotel images follow pattern c1.jpg, c2.jpg, c10.jpg
   final isHotel = RegExp(r'^c\d+\.jpg$').hasMatch(filename);
 

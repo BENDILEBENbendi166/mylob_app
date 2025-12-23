@@ -1,3 +1,9 @@
-String hotelImage(String filename) => 'assets/images/hotels/$filename';
+String hotelImage(String filename) {
+  if (filename.startsWith('assets/')) return filename;
+  return 'assets/images/hotels/$filename';
+}
 
-String cityImage(String filename) => 'assets/images/cities/$filename';
+String cityImage(String filename) {
+  if (filename.startsWith('assets/')) return filename;
+  return 'assets/images/cities/$filename';
+}
