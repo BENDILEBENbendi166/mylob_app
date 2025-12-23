@@ -15,6 +15,9 @@ import 'package:mylob_app/screens/homeScreen/recommended_hotels_section.dart';
 import 'package:mylob_app/screens/city/widgets/city_hero.dart';
 import 'package:mylob_app/screens/city/widgets/attractions_grid.dart';
 import 'package:mylob_app/screens/city/widgets/hotels_list.dart';
+import 'package:mylob_app/screens/hotel/widgets/hotel_hero.dart';
+import 'package:mylob_app/screens/hotel/widgets/hotel_info.dart';
+import 'package:mylob_app/screens/hotel/widgets/deals_list.dart';
 
 void main() {
   testWidgets('HomeScreen smoke test', (WidgetTester tester) async {
@@ -310,5 +313,163 @@ void main() {
 
     // Verify empty state message
     expect(find.text('No hotels found in this city'), findsOneWidget);
+  });
+
+  // Hotel Screen Widget Tests
+  testWidgets('HotelHero renders with loading state', (WidgetTester tester) async {
+    await tester.pumpWidget(
+      const MaterialApp(
+        home: Scaffold(
+          body: HotelHero(
+            hotel: null,
+            isLoading: true,
+          ),
+        ),
+      ),
+    );
+
+    // Wait for rendering
+    await tester.pumpAndSettle();
+
+    // Verify skeleton is present
+    expect(find.byType(HotelHero), findsOneWidget);
+  });
+
+  testWidgets('HotelHero displays single image', (WidgetTester tester) async {
+    final testHotel = {
+      'photoUrls': ['c1.jpg'],
+    };
+
+    await tester.pumpWidget(
+      MaterialApp(
+        home: Scaffold(
+          body: HotelHero(
+            hotel: testHotel,
+            isLoading: false,
+          ),
+        ),
+      ),
+    );
+
+    // Wait for rendering
+    await tester.pumpAndSettle();
+
+    // Verify hero is displayed
+    expect(find.byType(HotelHero), findsOneWidget);
+  });
+
+  testWidgets('HotelInfo renders with loading state', (WidgetTester tester) async {
+    await tester.pumpWidget(
+      const MaterialApp(
+        home: Scaffold(
+          body: HotelInfo(
+            hotel: null,
+            city: null,
+            isLoading: true,
+          ),
+        ),
+      ),
+    );
+
+    // Verify the title is present
+    expect(find.text('Hotel Information'), findsOneWidget);
+  });
+
+  testWidgets('HotelInfo displays hotel information', (WidgetTester tester) async {
+    final testHotel = {
+      'name': 'Grand Plaza Hotel',
+      'stars': 5,
+      'city': 'London',
+      'district': 'Westminster',
+      'basePrice': 150,
+      'features': ['WiFi', 'Pool', 'Gym'],
+    };
+
+    await tester.pumpWidget(
+      MaterialApp(
+        home: Scaffold(
+          body: HotelInfo(
+            hotel: testHotel,
+            city: null,
+            isLoading: false,
+          ),
+        ),
+      ),
+    );
+
+    // Wait for rendering
+    await tester.pumpAndSettle();
+
+    // Verify hotel information is displayed
+    expect(find.text('Grand Plaza Hotel'), findsOneWidget);
+    expect(find.text('5 Star Hotel'), findsOneWidget);
+    expect(find.text('Westminster, London'), findsOneWidget);
+  });
+
+  testWidgets('DealsList renders with loading state', (WidgetTester tester) async {
+    await tester.pumpWidget(
+      const MaterialApp(
+        home: Scaffold(
+          body: DealsList(
+            deals: [],
+            isLoading: true,
+          ),
+        ),
+      ),
+    );
+
+    // Verify the title is present
+    expect(find.text('Available Deals'), findsOneWidget);
+  });
+
+  testWidgets('DealsList shows empty state', (WidgetTester tester) async {
+    await tester.pumpWidget(
+      const MaterialApp(
+        home: Scaffold(
+          body: DealsList(
+            deals: [],
+            isLoading: false,
+          ),
+        ),
+      ),
+    );
+
+    // Wait for rendering
+    await tester.pumpAndSettle();
+
+    // Verify empty state message
+    expect(find.text('No deals available'), findsOneWidget);
+  });
+
+  testWidgets('DealsList displays deals', (WidgetTester tester) async {
+    final testDeals = [
+      {
+        'category': 'Weekend Special',
+        'discountPercent': 30,
+        'finalPrice': 105,
+        'date': DateTime.now(),
+        'availableRooms': 5,
+        'activeAfter18': false,
+      },
+    ];
+
+    await tester.pumpWidget(
+      MaterialApp(
+        home: Scaffold(
+          body: DealsList(
+            deals: testDeals,
+            isLoading: false,
+          ),
+        ),
+      ),
+    );
+
+    // Wait for rendering
+    await tester.pumpAndSettle();
+
+    // Verify deal information is displayed
+    expect(find.text('Weekend Special'), findsOneWidget);
+    expect(find.text('30% OFF'), findsOneWidget);
+    expect(find.text('£105'), findsOneWidget);
   });
 }
