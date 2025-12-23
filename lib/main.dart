@@ -81,17 +81,19 @@ class MyLob extends StatelessWidget {
           builder: (_, state) =>
               DealListPage(hotelId: state.pathParameters['hotelId']!),
         ),
-        
+
         // ✅ Deal (single deal detail)
         GoRoute(
           path: '/deal/:dealId',
-          builder: (_, state) => DealPage(dealId: state.pathParameters['dealId']!),
+          builder: (_, state) =>
+              DealPage(dealId: state.pathParameters['dealId']!),
         ),
 
         // ✅ Booking
         GoRoute(
           path: '/booking/:dealId',
-          builder: (_, state) => BookingPage(dealId: state.pathParameters['dealId']!),
+          builder: (_, state) =>
+              BookingPage(dealId: state.pathParameters['dealId']!),
         ),
 
         // ✅ Reservation
@@ -113,7 +115,7 @@ class MyLob extends StatelessWidget {
     );
 
     return MaterialApp.router(
-      title: 'Lobideyim',
+      title: 'Lobideyim.com',
       theme: AppTheme.lightTheme,
       darkTheme: AppTheme.darkTheme,
       themeMode: ThemeMode.system,
