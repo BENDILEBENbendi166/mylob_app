@@ -34,7 +34,8 @@ void main() {
     expect(find.text('Why Lobideyim.com?'), findsOneWidget);
   });
 
-  testWidgets('CitySpotlightCarousel renders with loading state', (WidgetTester tester) async {
+  testWidgets('CitySpotlightCarousel renders with loading state',
+      (WidgetTester tester) async {
     await tester.pumpWidget(
       const MaterialApp(
         home: Scaffold(
@@ -50,7 +51,8 @@ void main() {
     expect(find.text('Explore Cities'), findsOneWidget);
   });
 
-  testWidgets('DealOfTheDay renders with loading state', (WidgetTester tester) async {
+  testWidgets('DealOfTheDay renders with loading state',
+      (WidgetTester tester) async {
     await tester.pumpWidget(
       const MaterialApp(
         home: Scaffold(
@@ -67,7 +69,8 @@ void main() {
     expect(find.text('Deal of the Day'), findsOneWidget);
   });
 
-  testWidgets('LastMinuteDealsSection renders with loading state', (WidgetTester tester) async {
+  testWidgets('LastMinuteDealsSection renders with loading state',
+      (WidgetTester tester) async {
     await tester.pumpWidget(
       const MaterialApp(
         home: Scaffold(
@@ -83,7 +86,8 @@ void main() {
     expect(find.text('Last Minute Deals'), findsOneWidget);
   });
 
-  testWidgets('RecommendedHotelsSection renders with loading state', (WidgetTester tester) async {
+  testWidgets('RecommendedHotelsSection renders with loading state',
+      (WidgetTester tester) async {
     await tester.pumpWidget(
       const MaterialApp(
         home: Scaffold(
@@ -100,10 +104,21 @@ void main() {
     expect(find.text('Recommended Hotels'), findsOneWidget);
   });
 
-  testWidgets('CitySpotlightCarousel renders cities', (WidgetTester tester) async {
+  testWidgets('CitySpotlightCarousel renders cities',
+      (WidgetTester tester) async {
     final testCities = [
-      {'id': '1', 'name': 'London', 'imageUrl': 'london.jpg', 'popularAttractions': []},
-      {'id': '2', 'name': 'Paris', 'imageUrl': 'paris.jpg', 'popularAttractions': []},
+      {
+        'id': '1',
+        'name': 'London',
+        'imageUrl': 'london.jpg',
+        'popularAttractions': []
+      },
+      {
+        'id': '2',
+        'name': 'Paris',
+        'imageUrl': 'paris.jpg',
+        'popularAttractions': []
+      },
     ];
 
     await tester.pumpWidget(
@@ -124,7 +139,8 @@ void main() {
     expect(find.text('London'), findsOneWidget);
   });
 
-  testWidgets('LastMinuteDealsSection displays empty state', (WidgetTester tester) async {
+  testWidgets('LastMinuteDealsSection displays empty state',
+      (WidgetTester tester) async {
     await tester.pumpWidget(
       const MaterialApp(
         home: Scaffold(
@@ -143,7 +159,8 @@ void main() {
     expect(find.text('No last minute deals available'), findsOneWidget);
   });
 
-  testWidgets('DealOfTheDay displays deal information', (WidgetTester tester) async {
+  testWidgets('DealOfTheDay displays deal information',
+      (WidgetTester tester) async {
     final testDeal = {
       'category': 'Luxury Hotel',
       'discountPercent': 50,
@@ -177,7 +194,8 @@ void main() {
   });
 
   // City Screen Widget Tests
-  testWidgets('CityHero renders with loading state', (WidgetTester tester) async {
+  testWidgets('CityHero renders with loading state',
+      (WidgetTester tester) async {
     await tester.pumpWidget(
       const MaterialApp(
         home: Scaffold(
@@ -196,7 +214,8 @@ void main() {
     expect(find.byType(Icon), findsOneWidget);
   });
 
-  testWidgets('CityHero displays city information', (WidgetTester tester) async {
+  testWidgets('CityHero displays city information',
+      (WidgetTester tester) async {
     final testCity = {
       'name': 'London',
       'country': 'United Kingdom',
@@ -222,7 +241,8 @@ void main() {
     expect(find.text('United Kingdom'), findsOneWidget);
   });
 
-  testWidgets('PopularAttractionsGrid renders with loading state', (WidgetTester tester) async {
+  testWidgets('PopularAttractionsGrid renders with loading state',
+      (WidgetTester tester) async {
     await tester.pumpWidget(
       const MaterialApp(
         home: Scaffold(
@@ -238,7 +258,8 @@ void main() {
     expect(find.text('Popular Attractions'), findsOneWidget);
   });
 
-  testWidgets('PopularAttractionsGrid displays attractions', (WidgetTester tester) async {
+  testWidgets('PopularAttractionsGrid displays attractions',
+      (WidgetTester tester) async {
     final testAttractions = [
       {'name': 'Big Ben', 'latitude': 51.5007, 'longitude': -0.1246},
       {'name': 'Tower Bridge', 'latitude': 51.5055, 'longitude': -0.0754},
@@ -263,7 +284,8 @@ void main() {
     expect(find.text('Tower Bridge'), findsOneWidget);
   });
 
-  testWidgets('PopularAttractionsGrid shows empty state', (WidgetTester tester) async {
+  testWidgets('PopularAttractionsGrid shows empty state',
+      (WidgetTester tester) async {
     await tester.pumpWidget(
       const MaterialApp(
         home: Scaffold(
@@ -282,7 +304,8 @@ void main() {
     expect(find.text('No attractions available'), findsOneWidget);
   });
 
-  testWidgets('HotelsInCityList renders with loading state', (WidgetTester tester) async {
+  testWidgets('HotelsInCityList renders with loading state',
+      (WidgetTester tester) async {
     await tester.pumpWidget(
       const MaterialApp(
         home: Scaffold(
@@ -299,14 +322,15 @@ void main() {
     expect(find.textContaining('Hotels in'), findsOneWidget);
   });
 
-  testWidgets('HotelsInCityList shows empty state', (WidgetTester tester) async {
+  testWidgets('HotelsInCityList shows empty state',
+      (WidgetTester tester) async {
     final testCity = {'name': 'Paris'};
 
     await tester.pumpWidget(
       MaterialApp(
         home: Scaffold(
           body: HotelsInCityList(
-            hotels: [],
+            hotels: const [],
             city: testCity,
             isLoading: false,
           ),
@@ -322,7 +346,8 @@ void main() {
   });
 
   // Hotel Screen Widget Tests
-  testWidgets('HotelHero renders with loading state', (WidgetTester tester) async {
+  testWidgets('HotelHero renders with loading state',
+      (WidgetTester tester) async {
     await tester.pumpWidget(
       const MaterialApp(
         home: Scaffold(
@@ -364,7 +389,8 @@ void main() {
     expect(find.byType(HotelHero), findsOneWidget);
   });
 
-  testWidgets('HotelInfo renders with loading state', (WidgetTester tester) async {
+  testWidgets('HotelInfo renders with loading state',
+      (WidgetTester tester) async {
     await tester.pumpWidget(
       const MaterialApp(
         home: Scaffold(
@@ -381,7 +407,8 @@ void main() {
     expect(find.text('Hotel Information'), findsOneWidget);
   });
 
-  testWidgets('HotelInfo displays hotel information', (WidgetTester tester) async {
+  testWidgets('HotelInfo displays hotel information',
+      (WidgetTester tester) async {
     final testHotel = {
       'name': 'Grand Plaza Hotel',
       'stars': 5,
@@ -412,7 +439,8 @@ void main() {
     expect(find.text('Westminster, London'), findsOneWidget);
   });
 
-  testWidgets('DealsList renders with loading state', (WidgetTester tester) async {
+  testWidgets('DealsList renders with loading state',
+      (WidgetTester tester) async {
     await tester.pumpWidget(
       const MaterialApp(
         home: Scaffold(
@@ -480,7 +508,8 @@ void main() {
   });
 
   // Deal Screen Widget Tests
-  testWidgets('DealHero renders with loading state', (WidgetTester tester) async {
+  testWidgets('DealHero renders with loading state',
+      (WidgetTester tester) async {
     await tester.pumpWidget(
       const MaterialApp(
         home: Scaffold(
@@ -532,7 +561,8 @@ void main() {
     expect(find.text('OFF'), findsOneWidget);
   });
 
-  testWidgets('DealInfo renders with loading state', (WidgetTester tester) async {
+  testWidgets('DealInfo renders with loading state',
+      (WidgetTester tester) async {
     await tester.pumpWidget(
       const MaterialApp(
         home: Scaffold(
@@ -621,7 +651,8 @@ void main() {
     expect(find.text('Book Now'), findsOneWidget);
   });
 
-  testWidgets('BookButton shows sold out when no rooms', (WidgetTester tester) async {
+  testWidgets('BookButton shows sold out when no rooms',
+      (WidgetTester tester) async {
     final testDeal = {
       'finalPrice': 99,
       'availableRooms': 0,
@@ -651,7 +682,8 @@ void main() {
   });
 
   // Booking Screen Widget Tests
-  testWidgets('BookingSummary renders with loading state', (WidgetTester tester) async {
+  testWidgets('BookingSummary renders with loading state',
+      (WidgetTester tester) async {
     await tester.pumpWidget(
       const MaterialApp(
         home: Scaffold(
@@ -669,7 +701,8 @@ void main() {
     expect(find.text('Booking Summary'), findsOneWidget);
   });
 
-  testWidgets('BookingSummary displays booking information', (WidgetTester tester) async {
+  testWidgets('BookingSummary displays booking information',
+      (WidgetTester tester) async {
     final testHotel = {
       'name': 'Luxury Hotel',
       'district': 'Downtown',
@@ -708,7 +741,8 @@ void main() {
     expect(find.text('£120'), findsOneWidget);
   });
 
-  testWidgets('GuestForm validates required fields', (WidgetTester tester) async {
+  testWidgets('GuestForm validates required fields',
+      (WidgetTester tester) async {
     final formKey = GlobalKey<FormState>();
     final nameController = TextEditingController();
     final emailController = TextEditingController();
@@ -733,7 +767,7 @@ void main() {
 
     // Verify form title is present
     expect(find.text('Guest Details'), findsOneWidget);
-    
+
     // Verify input fields are present
     expect(find.text('Full Name'), findsOneWidget);
     expect(find.text('Email Address'), findsOneWidget);
@@ -765,7 +799,8 @@ void main() {
     expect(find.textContaining('£150'), findsOneWidget);
   });
 
-  testWidgets('ConfirmButton shows payment options', (WidgetTester tester) async {
+  testWidgets('ConfirmButton shows payment options',
+      (WidgetTester tester) async {
     final testDeal = {
       'finalPrice': 100,
     };

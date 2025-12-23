@@ -49,15 +49,16 @@ class _HomeScreenState extends State<HomeScreen> {
         CityService.fetchCitiesFirestore(),
       ]);
 
-      final fetchedHotels = results[0] as List<Map<String, dynamic>>;
-      final fetchedDeals = results[1] as List<Map<String, dynamic>>;
-      final fetchedCities = results[2] as List<Map<String, dynamic>>;
+      final fetchedHotels = results[0];
+      final fetchedDeals = results[1];
+      final fetchedCities = results[2];
 
       if (!mounted) return; // ✅ prevents setState after dispose
 
       // Process data
-      final processedFeaturedCity = fetchedCities.isNotEmpty ? fetchedCities.first : null;
-      
+      final processedFeaturedCity =
+          fetchedCities.isNotEmpty ? fetchedCities.first : null;
+
       // Get top deal (highest discount percentage)
       Map<String, dynamic>? processedTopDeal;
       Map<String, dynamic>? processedTopDealHotel;
@@ -67,25 +68,25 @@ class _HomeScreenState extends State<HomeScreen> {
           final nextDiscount = next['discountPercent'] ?? 0;
           return currDiscount > nextDiscount ? curr : next;
         });
-        
+
         // Fetch hotel for the top deal - find in already fetched hotels
         if (processedTopDeal['hotelId'] != null) {
           processedTopDealHotel = fetchedHotels.firstWhere(
             (hotel) => hotel['id'] == processedTopDeal!['hotelId'],
             orElse: () => {},
           );
-          
+
           // If not found in fetched hotels, fetch it separately
           if (processedTopDealHotel.isEmpty) {
-            processedTopDealHotel = await HotelService.fetchHotelById(processedTopDeal['hotelId']);
+            processedTopDealHotel =
+                await HotelService.fetchHotelById(processedTopDeal['hotelId']);
           }
         }
       }
 
       // Filter last minute deals (activeAfter18 == true)
-      final processedLastMinuteDeals = fetchedDeals
-          .where((deal) => deal['activeAfter18'] == true)
-          .toList();
+      final processedLastMinuteDeals =
+          fetchedDeals.where((deal) => deal['activeAfter18'] == true).toList();
 
       setState(() {
         hotels = fetchedHotels;
@@ -110,11 +111,11 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: CustomNavBar(
+      appBar: const CustomNavBar(
         backgroundColor: kBackgroundColor,
         iconColor: kIconColor,
       ),
-      drawer: CustomDrawer(),
+      drawer: const CustomDrawer(),
       body: SingleChildScrollView(
         physics: const BouncingScrollPhysics(),
         child: Column(
@@ -148,7 +149,7 @@ class _HomeScreenState extends State<HomeScreen> {
             ),
             const SizedBox(height: 48),
 
-            WhySection(),
+            const WhySection(),
             const SizedBox(height: 60),
 
             // 5. RecommendedHotelsSection - Top-rated hotels
@@ -169,10 +170,10 @@ class _HomeScreenState extends State<HomeScreen> {
 
             const SizedBox(height: 60),
 
-            ExploreButton(),
+            const ExploreButton(),
             const SizedBox(height: 60),
 
-            FooterScreen(),
+            const FooterScreen(),
           ],
         ),
       ),

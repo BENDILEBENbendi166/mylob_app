@@ -60,7 +60,9 @@ class HeroScreen extends StatelessWidget {
                 ? Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      Expanded(child: HeroText(r: r, cityName: featuredCity?['name'])),
+                      Expanded(
+                          child:
+                              HeroText(r: r, cityName: featuredCity?['name'])),
                       SizedBox(width: r.spacing * 2),
                       const SizedBox(width: 350, child: HeroSearchBar()),
                     ],
@@ -70,7 +72,7 @@ class HeroScreen extends StatelessWidget {
                     children: [
                       HeroText(r: r, cityName: featuredCity?['name']),
                       SizedBox(height: r.spacing),
-                      HeroSearchBar(),
+                      const HeroSearchBar(),
                     ],
                   ),
           ),
@@ -87,7 +89,9 @@ class HeroScreen extends StatelessWidget {
     }
 
     // Use featured city image if available, otherwise use default
-    if (featuredCity != null && featuredCity!['imageUrl'] != null && featuredCity!['imageUrl'].toString().isNotEmpty) {
+    if (featuredCity != null &&
+        featuredCity!['imageUrl'] != null &&
+        featuredCity!['imageUrl'].toString().isNotEmpty) {
       return safeAssetImage(
         featuredCity!['imageUrl'],
         fit: BoxFit.cover,

@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:mylob_app/ui/gradients.dart';
 import 'package:mylob_app/ui/spacing.dart';
 
 /// ShimmerBox

@@ -47,13 +47,14 @@ class _BookingScreenState extends State<BookingScreen> {
     try {
       // Fetch deal data
       final fetchedDeal = await DealService.fetchDealById(widget.dealId);
-      
+
       if (!mounted) return;
 
       // Fetch hotel data if deal has hotelId
       Map<String, dynamic>? fetchedHotel;
       if (fetchedDeal != null && fetchedDeal['hotelId'] != null) {
-        fetchedHotel = await HotelService.fetchHotelById(fetchedDeal['hotelId']);
+        fetchedHotel =
+            await HotelService.fetchHotelById(fetchedDeal['hotelId']);
       }
 
       if (!mounted) return;
@@ -91,10 +92,11 @@ class _BookingScreenState extends State<BookingScreen> {
   String _generateReservationCode() {
     // Use timestamp to ensure uniqueness
     final timestamp = DateTime.now().millisecondsSinceEpoch;
-    final random = Random(timestamp); // Seed with timestamp for better randomness
-    final letters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
-    final numbers = '0123456789';
-    
+    final random =
+        Random(timestamp); // Seed with timestamp for better randomness
+    const letters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+    const numbers = '0123456789';
+
     String code = '';
     for (int i = 0; i < 3; i++) {
       code += letters[random.nextInt(letters.length)];
@@ -102,7 +104,7 @@ class _BookingScreenState extends State<BookingScreen> {
     for (int i = 0; i < 4; i++) {
       code += numbers[random.nextInt(numbers.length)];
     }
-    
+
     return code;
   }
 
@@ -118,12 +120,13 @@ class _BookingScreenState extends State<BookingScreen> {
     try {
       // Generate reservation code
       final reservationCode = _generateReservationCode();
-      
+
       // Get deal date
       final dealDate = deal!['date'] is DateTime
           ? deal!['date'] as DateTime
-          : DateTime.tryParse(deal!['date']?.toString() ?? '') ?? DateTime.now();
-      
+          : DateTime.tryParse(deal!['date']?.toString() ?? '') ??
+              DateTime.now();
+
       final checkInDate = dealDate;
       final checkOutDate = dealDate.add(const Duration(days: 1));
 
@@ -131,7 +134,8 @@ class _BookingScreenState extends State<BookingScreen> {
       final reservationData = {
         'code': reservationCode,
         'dealId': widget.dealId,
-        'hotelId': hotel!['id'] ?? deal!['hotelId'], // Fallback to deal's hotelId
+        'hotelId':
+            hotel!['id'] ?? deal!['hotelId'], // Fallback to deal's hotelId
         'hotelName': hotel!['name'] ?? 'Unknown Hotel',
         'cityName': city?['name'] ?? hotel!['city'] ?? 'Unknown City',
         'guestName': _nameController.text.trim(),
@@ -148,7 +152,8 @@ class _BookingScreenState extends State<BookingScreen> {
       };
 
       // Save reservation to Firestore
-      await ReservationService.createReservation(reservationCode, reservationData);
+      await ReservationService.createReservation(
+          reservationCode, reservationData);
 
       if (!mounted) return;
 
@@ -156,7 +161,7 @@ class _BookingScreenState extends State<BookingScreen> {
       _showSuccessDialog(reservationCode);
     } catch (e) {
       if (!mounted) return;
-      
+
       setState(() {
         isSubmitting = false;
       });
@@ -309,7 +314,7 @@ class _BookingScreenState extends State<BookingScreen> {
                     city: city,
                     isLoading: isLoading,
                   ),
-                  
+
                   SizedBox(height: r.spacing * 2),
 
                   // 2. GuestForm
@@ -320,7 +325,7 @@ class _BookingScreenState extends State<BookingScreen> {
                     phoneController: _phoneController,
                     isLoading: isSubmitting,
                   ),
-                  
+
                   SizedBox(height: r.spacing * 2),
                 ],
               ),
