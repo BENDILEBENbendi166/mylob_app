@@ -172,9 +172,9 @@ class DealCard extends StatelessWidget {
               borderRadius:
                   const BorderRadius.vertical(top: Radius.circular(16)),
               child: safeAssetImage(
-                hotel?['imageUrls'] != null && hotel!['imageUrls'].isNotEmpty
-                    ? hotel!['imageUrls'][0]
-                    : '',
+                hotel?['photoUrls'] != null && hotel!['photoUrls'].isNotEmpty
+                    ? hotel!['photoUrls'][0]
+                    : 'c1.jpg',
                 fit: BoxFit.cover,
               ),
             ),
