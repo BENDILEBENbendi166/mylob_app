@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:mylob_app/utils/responsive.dart';
 import 'package:skeletonizer/skeletonizer.dart';
-import 'package:mylob_app/utils/image_path.dart';
 
 class DealOfTheDay extends StatelessWidget {
   final Map<String, dynamic>? topDeal;
@@ -83,9 +82,7 @@ class DealOfTheDay extends StatelessWidget {
               ),
               const SizedBox(height: 16),
               Text(
-                isLoading
-                    ? 'Hotel Name'
-                    : hotel?['name'] ?? 'Featured Hotel',
+                isLoading ? 'Hotel Name' : hotel?['name'] ?? 'Featured Hotel',
                 style: const TextStyle(
                   color: Colors.white,
                   fontSize: 18,

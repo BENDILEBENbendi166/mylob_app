@@ -9,7 +9,7 @@ class AppTheme {
   static ThemeData lightTheme = ThemeData(
     useMaterial3: true,
     brightness: Brightness.light,
-    
+
     // Color scheme
     colorScheme: const ColorScheme.light(
       primary: AppColors.primary,
@@ -22,10 +22,10 @@ class AppTheme {
       onSurface: AppColors.textPrimary,
       surfaceContainerHighest: AppColors.surfaceVariant,
     ),
-    
+
     // Scaffold background
     scaffoldBackgroundColor: AppColors.background,
-    
+
     // AppBar theme
     appBarTheme: const AppBarTheme(
       backgroundColor: AppColors.primary,
@@ -38,7 +38,7 @@ class AppTheme {
         color: Colors.white,
       ),
     ),
-    
+
     // Card theme
     cardTheme: CardTheme(
       color: AppColors.surface,
@@ -48,7 +48,7 @@ class AppTheme {
       ),
       margin: const EdgeInsets.all(AppSpacing.sm),
     ),
-    
+
     // Elevated button theme
     elevatedButtonTheme: ElevatedButtonThemeData(
       style: ElevatedButton.styleFrom(
@@ -65,7 +65,7 @@ class AppTheme {
         textStyle: AppTextStyles.labelLarge,
       ),
     ),
-    
+
     // Text button theme
     textButtonTheme: TextButtonThemeData(
       style: TextButton.styleFrom(
@@ -80,7 +80,7 @@ class AppTheme {
         textStyle: AppTextStyles.labelMedium,
       ),
     ),
-    
+
     // Outlined button theme
     outlinedButtonTheme: OutlinedButtonThemeData(
       style: OutlinedButton.styleFrom(
@@ -96,7 +96,7 @@ class AppTheme {
         textStyle: AppTextStyles.labelLarge,
       ),
     ),
-    
+
     // Input decoration theme
     inputDecorationTheme: InputDecorationTheme(
       filled: true,
@@ -122,7 +122,7 @@ class AppTheme {
         vertical: AppSpacing.md,
       ),
     ),
-    
+
     // Chip theme
     chipTheme: ChipThemeData(
       backgroundColor: AppColors.surfaceVariant,
@@ -135,14 +135,14 @@ class AppTheme {
         borderRadius: BorderRadius.circular(AppSpacing.radiusSm),
       ),
     ),
-    
+
     // Divider theme
     dividerTheme: const DividerThemeData(
       color: AppColors.divider,
       thickness: 1,
       space: AppSpacing.md,
     ),
-    
+
     // Text theme
     textTheme: const TextTheme(
       displayLarge: AppTextStyles.displayLarge,
@@ -162,11 +162,11 @@ class AppTheme {
       labelSmall: AppTextStyles.labelSmall,
     ),
   );
-  
+
   static ThemeData darkTheme = ThemeData(
     useMaterial3: true,
     brightness: Brightness.dark,
-    
+
     // Color scheme
     colorScheme: const ColorScheme.dark(
       primary: AppColors.primaryLight,
@@ -179,10 +179,10 @@ class AppTheme {
       onSurface: AppColors.darkTextPrimary,
       surfaceContainerHighest: AppColors.darkSurfaceVariant,
     ),
-    
+
     // Scaffold background
     scaffoldBackgroundColor: AppColors.darkBackground,
-    
+
     // AppBar theme
     appBarTheme: const AppBarTheme(
       backgroundColor: AppColors.darkSurface,
@@ -195,7 +195,7 @@ class AppTheme {
         color: AppColors.darkTextPrimary,
       ),
     ),
-    
+
     // Card theme
     cardTheme: CardTheme(
       color: AppColors.darkSurface,
@@ -205,7 +205,7 @@ class AppTheme {
       ),
       margin: const EdgeInsets.all(AppSpacing.sm),
     ),
-    
+
     // Text theme with dark colors
     textTheme: const TextTheme(
       displayLarge: TextStyle(
