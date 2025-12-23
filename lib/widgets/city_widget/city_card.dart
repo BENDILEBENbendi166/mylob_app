@@ -27,21 +27,24 @@ class CityCard extends StatelessWidget {
         child: Skeletonizer(
           enabled: isSkeleton,
           child: Column(
+            mainAxisSize: MainAxisSize.min,
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
               // ✅ IMAGE
               ClipRRect(
                 borderRadius:
                     const BorderRadius.vertical(top: Radius.circular(12)),
-                child: isSkeleton
-                    ? Container(
-                        height: 120,
-                        color: Colors.grey[300],
-                      )
-                    : safeAssetImage(
-                        city?['imageUrl'] ?? 'coventry.jpg',
-                        fit: BoxFit.cover,
-                      ),
+                child: SizedBox(
+                  height: 120,
+                  child: isSkeleton
+                      ? Container(
+                          color: Colors.grey[300],
+                        )
+                      : safeAssetImage(
+                          city?['imageUrl'] ?? 'coventry.jpg',
+                          fit: BoxFit.cover,
+                        ),
+                ),
               ),
 
               // ✅ NAME + ATTRACTIONS
@@ -54,6 +57,7 @@ class CityCard extends StatelessWidget {
                         color: Colors.grey[300],
                       )
                     : Column(
+                        mainAxisSize: MainAxisSize.min,
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Text(
@@ -62,6 +66,8 @@ class CityCard extends StatelessWidget {
                               fontWeight: FontWeight.bold,
                               fontSize: 16,
                             ),
+                            maxLines: 1,
+                            overflow: TextOverflow.ellipsis,
                           ),
                           const SizedBox(height: 4),
                           Text(
@@ -70,6 +76,8 @@ class CityCard extends StatelessWidget {
                               fontSize: 13,
                               color: Colors.grey[600],
                             ),
+                            maxLines: 1,
+                            overflow: TextOverflow.ellipsis,
                           ),
                         ],
                       ),
