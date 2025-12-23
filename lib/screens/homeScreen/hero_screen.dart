@@ -33,13 +33,14 @@ class HeroScreen extends StatelessWidget {
           // ✅ Background image - use featured city image if available
           _buildBackgroundImage(),
 
-          // ✅ Gradient overlay
+          // ✅ Crushy blue gradient overlay
           Container(
             decoration: BoxDecoration(
               gradient: LinearGradient(
                 colors: [
-                  Colors.black.withOpacity(0.55),
-                  Colors.black.withOpacity(0.25),
+                  const Color(0xFF1E88E5).withOpacity(0.7), // Blue
+                  const Color(0xFF1565C0).withOpacity(0.5), // Dark blue
+                  const Color(0xFF42A5F5).withOpacity(0.3), // Light blue
                   Colors.transparent,
                 ],
                 begin: Alignment.bottomCenter,
@@ -84,25 +85,39 @@ class HeroScreen extends StatelessWidget {
   Widget _buildBackgroundImage() {
     if (isLoading) {
       return Container(
-        color: Colors.grey[300],
+        decoration: BoxDecoration(
+          gradient: LinearGradient(
+            colors: [
+              Colors.blue.shade100,
+              Colors.blue.shade200,
+            ],
+            begin: Alignment.topLeft,
+            end: Alignment.bottomRight,
+          ),
+        ),
       );
     }
 
-    // Use featured city image if available, otherwise use default
-    if (featuredCity != null &&
-        featuredCity!['imageUrl'] != null &&
-        featuredCity!['imageUrl'].toString().isNotEmpty) {
-      return safeAssetImage(
-        featuredCity!['imageUrl'],
-        fit: BoxFit.cover,
-      );
-    }
-
-    // Fallback to default hero image
+    // Always use default hero.jpg for consistent branding
     return Image.asset(
       'assets/images/hero.jpg',
       fit: BoxFit.cover,
       alignment: Alignment.center,
+      errorBuilder: (context, error, stackTrace) {
+        // Fallback with nice gradient background if image fails
+        return Container(
+          decoration: BoxDecoration(
+            gradient: LinearGradient(
+              colors: [
+                const Color(0xFF1E88E5),
+                const Color(0xFF1565C0),
+              ],
+              begin: Alignment.topLeft,
+              end: Alignment.bottomRight,
+            ),
+          ),
+        );
+      },
     );
   }
 }

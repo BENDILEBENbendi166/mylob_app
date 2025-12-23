@@ -57,7 +57,7 @@ class HotelCard extends StatelessWidget {
   }
 
   // ---------------------------------------------------------
-  // REAL CARD
+  // REAL CARD - Copilotic Styled
   // ---------------------------------------------------------
   Widget _buildRealCard(BuildContext context) {
     final imageUrl = hotel?['photoUrls'] != null && hotel!['photoUrls'].isNotEmpty
@@ -73,17 +73,26 @@ class HotelCard extends StatelessWidget {
         duration: const Duration(milliseconds: 200),
         curve: Curves.easeOut,
         decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(16),
+          borderRadius: BorderRadius.circular(20),
+          gradient: LinearGradient(
+            colors: [
+              const Color(0xFF1E88E5).withOpacity(0.1),
+              const Color(0xFF42A5F5).withOpacity(0.05),
+            ],
+            begin: Alignment.topLeft,
+            end: Alignment.bottomRight,
+          ),
           boxShadow: [
             BoxShadow(
-              blurRadius: 12,
-              offset: const Offset(0, 6),
-              color: Colors.black.withOpacity(0.08),
+              blurRadius: 16,
+              spreadRadius: 2,
+              offset: const Offset(0, 8),
+              color: const Color(0xFF1E88E5).withOpacity(0.15),
             ),
           ],
         ),
         child: ClipRRect(
-          borderRadius: BorderRadius.circular(16),
+          borderRadius: BorderRadius.circular(20),
           child: Stack(
             children: [
               // ---------------------------------------------------------
@@ -95,7 +104,7 @@ class HotelCard extends StatelessWidget {
               ),
 
               // ---------------------------------------------------------
-              // GRADIENT OVERLAY
+              // COPILOTIC GRADIENT OVERLAY - Blue theme
               // ---------------------------------------------------------
               Container(
                 height: 200,
@@ -105,7 +114,8 @@ class HotelCard extends StatelessWidget {
                     end: Alignment.bottomCenter,
                     colors: [
                       Colors.transparent,
-                      Colors.black.withOpacity(0.6),
+                      const Color(0xFF1E88E5).withOpacity(0.7),
+                      const Color(0xFF1565C0).withOpacity(0.85),
                     ],
                   ),
                 ),
