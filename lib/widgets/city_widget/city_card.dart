@@ -39,7 +39,10 @@ class CityCard extends StatelessWidget {
                         color: Colors.grey[300],
                       )
                     : safeAssetImage(
-                        city?['imageUrl'] ?? '',
+                        city?['imageUrls'] != null &&
+                                city!['imageUrls'].isNotEmpty
+                            ? city!['imageUrls'][0]
+                            : '',
                         fit: BoxFit.cover,
                       ),
               ),

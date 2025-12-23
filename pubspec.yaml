@@ -102,7 +102,7 @@ flutter:
     - assets/images/hotels/c8.jpg
     - assets/images/hotels/c9.jpg
     - assets/images/hotels/c10.jpg
-    - assets/images/hero.jpg
+    - assets\images\hero.jpg
     - assets/images/cities/coventry.jpg
     - assets/images/cities/edinburgh.jpg
     - assets/images/cities/liverpool.jpg
