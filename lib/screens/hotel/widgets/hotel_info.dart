@@ -75,7 +75,7 @@ class HotelInfo extends StatelessWidget {
             Row(
               children: [
                 ...List.generate(
-                  hotel!['stars'] ?? 0,
+                  (hotel!['stars'] as int? ?? 0).clamp(0, 5),
                   (index) => const Icon(
                     Icons.star,
                     color: Colors.amber,
@@ -84,7 +84,7 @@ class HotelInfo extends StatelessWidget {
                 ),
                 const SizedBox(width: 8),
                 Text(
-                  '${hotel!['stars']} Star Hotel',
+                  '${(hotel!['stars'] as int? ?? 0).clamp(0, 5)} Star Hotel',
                   style: Theme.of(context).textTheme.bodyLarge?.copyWith(
                         fontWeight: FontWeight.w600,
                       ),

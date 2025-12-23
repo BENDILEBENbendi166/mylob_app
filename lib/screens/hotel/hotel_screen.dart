@@ -44,10 +44,14 @@ class _HotelScreenState extends State<HotelScreen> {
       if (fetchedHotel != null && fetchedHotel['city'] != null) {
         // Get all cities and find the matching one
         final cities = await CityService.fetchCitiesFirestore();
-        fetchedCity = cities.firstWhere(
-          (c) => c['name'] == fetchedHotel['city'],
-          orElse: () => {},
-        );
+        try {
+          fetchedCity = cities.firstWhere(
+            (c) => c['name'] == fetchedHotel['city'],
+          );
+        } catch (e) {
+          // City not found, leave fetchedCity as null
+          fetchedCity = null;
+        }
       }
 
       if (!mounted) return;
