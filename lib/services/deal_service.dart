@@ -25,4 +25,9 @@ class DealService {
     final snap = await FirestoreConnect.db.collection('deals').get();
     return snap.docs.map((d) => d.data()).toList();
   }
+
+  static Future<Map<String, dynamic>?> fetchDealById(String dealId) async {
+    final doc = await FirestoreConnect.db.collection('deals').doc(dealId).get();
+    return doc.data();
+  }
 }
