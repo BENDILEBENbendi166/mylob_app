@@ -5,6 +5,8 @@ import 'package:mylob_app/firebase_options.dart';
 import 'package:mylob_app/pages/city_page.dart';
 import 'package:mylob_app/pages/city_list_page.dart';
 import 'package:mylob_app/pages/deal_list_page.dart';
+import 'package:mylob_app/pages/deal_page.dart';
+import 'package:mylob_app/pages/booking_page.dart';
 import 'package:mylob_app/pages/favorites_page.dart';
 import 'package:mylob_app/pages/home_page.dart';
 import 'package:mylob_app/pages/hotel_page.dart';
@@ -64,15 +66,27 @@ class MyLob extends StatelessWidget {
 
         // ✅ Hotels
         GoRoute(
-          path: '/hotel/:id',
+          path: '/hotels/:id',
           builder: (_, state) => HotelPage(id: state.pathParameters['id']!),
         ),
 
-        // ✅ Deals
+        // ✅ Deals (by hotel - list view)
         GoRoute(
           path: '/deals/:hotelId',
           builder: (_, state) =>
               DealListPage(hotelId: state.pathParameters['hotelId']!),
+        ),
+        
+        // ✅ Deal (single deal detail)
+        GoRoute(
+          path: '/deal/:dealId',
+          builder: (_, state) => DealPage(dealId: state.pathParameters['dealId']!),
+        ),
+
+        // ✅ Booking
+        GoRoute(
+          path: '/booking/:dealId',
+          builder: (_, state) => BookingPage(dealId: state.pathParameters['dealId']!),
         ),
 
         // ✅ Reservation
