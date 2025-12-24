@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:mylob_app/screens/homeScreen/hero_search_bar.dart';
 import 'package:mylob_app/screens/homeScreen/hero_text.dart';
 import 'package:mylob_app/utils/responsive.dart';
-import 'package:mylob_app/utils/image_path.dart';
 
 class HeroScreen extends StatelessWidget {
   final Map<String, dynamic>? featuredCity;
@@ -106,11 +105,11 @@ class HeroScreen extends StatelessWidget {
       errorBuilder: (context, error, stackTrace) {
         // Fallback with nice gradient background if image fails
         return Container(
-          decoration: BoxDecoration(
+          decoration: const BoxDecoration(
             gradient: LinearGradient(
               colors: [
-                const Color(0xFF1E88E5),
-                const Color(0xFF1565C0),
+                Color(0xFF1E88E5),
+                Color(0xFF1565C0),
               ],
               begin: Alignment.topLeft,
               end: Alignment.bottomRight,
