@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:mylob_app/screens/homeScreen/Explore_Button.dart';
 import 'package:mylob_app/screens/homeScreen/drawer.dart';
 import 'package:mylob_app/screens/homeScreen/hero_screen.dart';
 import 'package:mylob_app/screens/homeScreen/deals_section.dart';
@@ -168,9 +167,6 @@ class _HomeScreenState extends State<HomeScreen> {
               isLoading: isLoading,
             ),
 
-            const SizedBox(height: 60),
-
-            const ExploreButton(),
             const SizedBox(height: 60),
 
             const FooterScreen(),

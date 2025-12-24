@@ -49,7 +49,8 @@ class CityCard extends StatelessWidget {
 
               // ✅ NAME + ATTRACTIONS - constrained height with tighter spacing
               Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 12.0, vertical: 6.0),
+                padding:
+                    const EdgeInsets.symmetric(horizontal: 12.0, vertical: 4.0),
                 child: isSkeleton
                     ? Container(
                         height: 18,
@@ -57,7 +58,7 @@ class CityCard extends StatelessWidget {
                         color: Colors.grey[300],
                       )
                     : SizedBox(
-                        height: 42, // Reduced from 48 to prevent overflow
+                        height: 36, // Reduced from 42 to 36 to prevent overflow
                         child: Column(
                           mainAxisSize: MainAxisSize.min,
                           crossAxisAlignment: CrossAxisAlignment.start,
@@ -67,16 +68,16 @@ class CityCard extends StatelessWidget {
                               city?['name'] ?? '',
                               style: const TextStyle(
                                 fontWeight: FontWeight.bold,
-                                fontSize: 15,
+                                fontSize: 14, // Reduced from 15 to 14
                               ),
                               maxLines: 1,
                               overflow: TextOverflow.ellipsis,
                             ),
-                            const SizedBox(height: 2),
+                            const SizedBox(height: 1), // Reduced from 2 to 1
                             Text(
                               "${attractions.length} attractions",
                               style: TextStyle(
-                                fontSize: 12,
+                                fontSize: 11, // Reduced from 12 to 11
                                 color: Colors.grey[600],
                               ),
                               maxLines: 1,
