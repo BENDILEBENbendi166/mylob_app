@@ -32,6 +32,7 @@ class HotelCard extends StatelessWidget {
   // ---------------------------------------------------------
   Widget _buildSkeleton(BuildContext context) {
     return Container(
+      height: 180, // Fixed height to match real card
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(16),
         color: Colors.grey.shade300,
@@ -39,18 +40,18 @@ class HotelCard extends StatelessWidget {
       child: Column(
         children: [
           Container(
-            height: 150,
+            height: 120, // Reduced from 150
             decoration: BoxDecoration(
               color: Colors.grey.shade300,
               borderRadius:
                   const BorderRadius.vertical(top: Radius.circular(16)),
             ),
           ),
-          const SizedBox(height: 12),
-          Container(height: 16, width: 140, color: Colors.grey.shade300),
           const SizedBox(height: 8),
-          Container(height: 14, width: 100, color: Colors.grey.shade300),
-          const SizedBox(height: 12),
+          Container(height: 14, width: 140, color: Colors.grey.shade300),
+          const SizedBox(height: 6),
+          Container(height: 12, width: 100, color: Colors.grey.shade300),
+          const SizedBox(height: 8),
         ],
       ),
     );
@@ -70,53 +71,48 @@ class HotelCard extends StatelessWidget {
     return MouseRegion(
       cursor: SystemMouseCursors.click,
       child: AnimatedContainer(
+        height: 180, // Fixed height for all cards
         duration: const Duration(milliseconds: 200),
         curve: Curves.easeOut,
         decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(20),
-          gradient: LinearGradient(
-            colors: [
-              const Color(0xFF1E88E5).withOpacity(0.1),
-              const Color(0xFF42A5F5).withOpacity(0.05),
-            ],
-            begin: Alignment.topLeft,
-            end: Alignment.bottomRight,
-          ),
+          borderRadius: BorderRadius.circular(16),
           boxShadow: [
             BoxShadow(
-              blurRadius: 16,
-              spreadRadius: 2,
-              offset: const Offset(0, 8),
-              color: const Color(0xFF1E88E5).withOpacity(0.15),
+              blurRadius: 8,
+              spreadRadius: 0,
+              offset: const Offset(0, 4),
+              color: Colors.black.withOpacity(0.1),
             ),
           ],
         ),
         child: ClipRRect(
-          borderRadius: BorderRadius.circular(20),
+          borderRadius: BorderRadius.circular(16),
           child: Stack(
             children: [
               // ---------------------------------------------------------
               // BACKGROUND IMAGE
               // ---------------------------------------------------------
-              safeAssetImage(
-                imageUrl,
-                fit: BoxFit.cover,
+              Positioned.fill(
+                child: safeAssetImage(
+                  imageUrl,
+                  fit: BoxFit.cover,
+                ),
               ),
 
               // ---------------------------------------------------------
-              // COPILOTIC GRADIENT OVERLAY - Blue theme
+              // SUBTLE GRADIENT OVERLAY - Removed tri-color
               // ---------------------------------------------------------
-              Container(
-                height: 200,
-                decoration: BoxDecoration(
-                  gradient: LinearGradient(
-                    begin: Alignment.topCenter,
-                    end: Alignment.bottomCenter,
-                    colors: [
-                      Colors.transparent,
-                      const Color(0xFF1E88E5).withOpacity(0.7),
-                      const Color(0xFF1565C0).withOpacity(0.85),
-                    ],
+              Positioned.fill(
+                child: Container(
+                  decoration: BoxDecoration(
+                    gradient: LinearGradient(
+                      begin: Alignment.topCenter,
+                      end: Alignment.bottomCenter,
+                      colors: [
+                        Colors.transparent,
+                        Colors.black.withOpacity(0.6),
+                      ],
+                    ),
                   ),
                 ),
               ),
@@ -125,42 +121,47 @@ class HotelCard extends StatelessWidget {
               // CONTENT
               // ---------------------------------------------------------
               Positioned(
-                left: 12,
-                right: 12,
-                bottom: 12,
+                left: 10,
+                right: 10,
+                bottom: 10,
                 child: Column(
+                  mainAxisSize: MainAxisSize.min,
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     // CITY BADGE
                     Container(
                       padding: const EdgeInsets.symmetric(
-                        horizontal: 8,
-                        vertical: 4,
+                        horizontal: 6,
+                        vertical: 3,
                       ),
                       decoration: BoxDecoration(
-                        color: Colors.white.withOpacity(0.85),
-                        borderRadius: BorderRadius.circular(8),
+                        color: Colors.white.withOpacity(0.9),
+                        borderRadius: BorderRadius.circular(6),
                       ),
                       child: Text(
                         cityName,
                         style: const TextStyle(
                           fontWeight: FontWeight.w600,
-                          fontSize: 12,
+                          fontSize: 11,
                         ),
+                        maxLines: 1,
+                        overflow: TextOverflow.ellipsis,
                       ),
                     ),
 
-                    const SizedBox(height: 8),
+                    const SizedBox(height: 6),
 
                     // HOTEL NAME
                     Text(
                       hotel!['name'],
                       style: const TextStyle(
                         color: Colors.white,
-                        fontSize: 18,
+                        fontSize: 15,
                         fontWeight: FontWeight.bold,
                         height: 1.2,
                       ),
+                      maxLines: 1,
+                      overflow: TextOverflow.ellipsis,
                     ),
 
                     const SizedBox(height: 4),
@@ -173,14 +174,15 @@ class HotelCard extends StatelessWidget {
                           style: const TextStyle(
                             color: Colors.amber,
                             fontWeight: FontWeight.bold,
+                            fontSize: 13,
                           ),
                         ),
-                        const SizedBox(width: 12),
+                        const SizedBox(width: 10),
                         Text(
                           "£$price",
                           style: const TextStyle(
                             color: Colors.white,
-                            fontSize: 16,
+                            fontSize: 14,
                             fontWeight: FontWeight.w600,
                           ),
                         ),
@@ -189,12 +191,12 @@ class HotelCard extends StatelessWidget {
 
                     // OPTIONAL DISTANCE
                     if (userLocation != null) ...[
-                      const SizedBox(height: 4),
+                      const SizedBox(height: 3),
                       Text(
                         _distanceText(),
                         style: TextStyle(
                           color: Colors.white.withOpacity(0.9),
-                          fontSize: 12,
+                          fontSize: 11,
                         ),
                       ),
                     ],

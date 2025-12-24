@@ -125,14 +125,14 @@ class _HomeScreenState extends State<HomeScreen> {
               featuredCity: featuredCity,
               isLoading: isLoading,
             ),
-            const SizedBox(height: 48),
+            const SizedBox(height: 60),
 
-            // 2. CitySpotlightCarousel - Horizontal carousel of cities
+            // 2. CitySpotlightCarousel - Horizontal carousel of cities (MORE SPACE)
             CitySpotlightCarousel(
               cities: cities,
               isLoading: isLoading,
             ),
-            const SizedBox(height: 48),
+            const SizedBox(height: 60),
 
             // 3. DealOfTheDay - Highlight best deal
             DealOfTheDay(
@@ -150,15 +150,15 @@ class _HomeScreenState extends State<HomeScreen> {
             const SizedBox(height: 48),
 
             const WhySection(),
-            const SizedBox(height: 60),
+            const SizedBox(height: 48),
 
-            // 5. RecommendedHotelsSection - Top-rated hotels
+            // 5. RecommendedHotelsSection - Top-rated hotels (REDUCED SPACE)
             RecommendedHotelsSection(
               hotels: hotels,
               cities: cities,
               isLoading: isLoading,
             ),
-            const SizedBox(height: 48),
+            const SizedBox(height: 40),
 
             // Original HomeDealsSection - kept for backward compatibility
             HomeDealsSection(
