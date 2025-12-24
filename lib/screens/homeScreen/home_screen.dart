@@ -170,9 +170,6 @@ class _HomeScreenState extends State<HomeScreen> {
 
             const SizedBox(height: 60),
 
-            const ExploreButton(),
-            const SizedBox(height: 60),
-
             const FooterScreen(),
           ],
         ),
