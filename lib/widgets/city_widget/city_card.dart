@@ -17,39 +17,47 @@ class CityCard extends StatelessWidget {
     final attractions = city?['popularAttractions'] as List<dynamic>? ?? [];
 
     return InkWell(
-      borderRadius: BorderRadius.circular(12),
+      borderRadius: BorderRadius.circular(18),
       onTap: isSkeleton || city == null
           ? null
           : () => context.go('/cities/${city!['id']}'),
-      child: Card(
-        elevation: 4,
-        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+      child: Container(
+        decoration: BoxDecoration(
+          color: Colors.white,
+          borderRadius: BorderRadius.circular(18),
+          boxShadow: [
+            BoxShadow(
+              color: Colors.black.withOpacity(0.06),
+              blurRadius: 12,
+              offset: const Offset(0, 4),
+            ),
+          ],
+        ),
+        margin: const EdgeInsets.all(4),
+        padding: const EdgeInsets.only(bottom: 10),
         child: Skeletonizer(
           enabled: isSkeleton,
           child: Column(
             mainAxisSize: MainAxisSize.min,
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
-              // ✅ IMAGE
-              Expanded(
-                child: ClipRRect(
-                  borderRadius:
-                      const BorderRadius.vertical(top: Radius.circular(12)),
+              // IMAGE
+              ClipRRect(
+                borderRadius:
+                    const BorderRadius.vertical(top: Radius.circular(18)),
+                child: SizedBox(
+                  height: 110,
                   child: isSkeleton
-                      ? Container(
-                          color: Colors.grey[300],
-                        )
+                      ? Container(color: Colors.grey[300])
                       : safeAssetImage(
                           city?['imageUrl'] ?? 'coventry.jpg',
                           fit: BoxFit.cover,
                         ),
                 ),
               ),
-
-              // ✅ NAME + ATTRACTIONS - constrained height with tighter spacing
               Padding(
-                padding:
-                    const EdgeInsets.symmetric(horizontal: 8.0, vertical: 2.0),
+                padding: const EdgeInsets.symmetric(
+                    horizontal: 14.0, vertical: 10.0),
                 child: isSkeleton
                     ? Container(
                         height: 18,
@@ -57,24 +65,22 @@ class CityCard extends StatelessWidget {
                         color: Colors.grey[300],
                       )
                     : Column(
-                        mainAxisSize: MainAxisSize.min,
                         crossAxisAlignment: CrossAxisAlignment.start,
-                        mainAxisAlignment: MainAxisAlignment.center,
                         children: [
                           Text(
                             city?['name'] ?? '',
                             style: const TextStyle(
                               fontWeight: FontWeight.bold,
-                              fontSize: 14,
+                              fontSize: 16,
                             ),
                             maxLines: 1,
                             overflow: TextOverflow.ellipsis,
                           ),
-                          const SizedBox(height: 1),
+                          const SizedBox(height: 4),
                           Text(
                             "${attractions.length} attractions",
                             style: TextStyle(
-                              fontSize: 11,
+                              fontSize: 13,
                               color: Colors.grey[600],
                             ),
                             maxLines: 1,

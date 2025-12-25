@@ -3,7 +3,11 @@ import 'firestore_connect.dart';
 class CityService {
   static Future<List<Map<String, dynamic>>> fetchCitiesFirestore() async {
     final snap = await FirestoreConnect.db.collection('cities').get();
-    return snap.docs.map((d) => d.data()).toList();
+    return snap.docs.map((d) {
+      final data = d.data();
+      data['id'] = d.id;
+      return data;
+    }).toList();
   }
 
   static Stream<List<Map<String, dynamic>>> streamCities(String cityId) {

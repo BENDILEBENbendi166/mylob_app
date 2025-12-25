@@ -61,9 +61,10 @@ class HotelCard extends StatelessWidget {
   // REAL CARD - Copilotic Styled
   // ---------------------------------------------------------
   Widget _buildRealCard(BuildContext context) {
-    final imageUrl = hotel?['photoUrls'] != null && hotel!['photoUrls'].isNotEmpty
-        ? hotel!['photoUrls'][0]
-        : 'c1.jpg';
+    final imageUrl =
+        hotel?['photoUrls'] != null && hotel!['photoUrls'].isNotEmpty
+            ? hotel!['photoUrls'][0]
+            : 'c1.jpg';
     final price = hotel!['basePrice'];
     final stars = hotel!['stars'];
     final cityName = city!['name'];
@@ -71,22 +72,22 @@ class HotelCard extends StatelessWidget {
     return MouseRegion(
       cursor: SystemMouseCursors.click,
       child: AnimatedContainer(
-        height: 180, // Fixed height for all cards
+        height: 180,
         duration: const Duration(milliseconds: 200),
         curve: Curves.easeOut,
         decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(16),
+          borderRadius: BorderRadius.circular(20),
           boxShadow: [
             BoxShadow(
-              blurRadius: 8,
+              blurRadius: 16,
               spreadRadius: 0,
-              offset: const Offset(0, 4),
-              color: Colors.black.withOpacity(0.1),
+              offset: const Offset(0, 6),
+              color: Colors.black.withOpacity(0.07),
             ),
           ],
         ),
         child: ClipRRect(
-          borderRadius: BorderRadius.circular(16),
+          borderRadius: BorderRadius.circular(20),
           child: Stack(
             children: [
               // ---------------------------------------------------------
@@ -109,8 +110,8 @@ class HotelCard extends StatelessWidget {
                       begin: Alignment.topCenter,
                       end: Alignment.bottomCenter,
                       colors: [
-                        Colors.transparent,
-                        Colors.black.withOpacity(0.6),
+                        Colors.white.withOpacity(0.01),
+                        Colors.black.withOpacity(0.35),
                       ],
                     ),
                   ),
@@ -121,9 +122,9 @@ class HotelCard extends StatelessWidget {
               // CONTENT
               // ---------------------------------------------------------
               Positioned(
-                left: 10,
-                right: 10,
-                bottom: 10,
+                left: 14,
+                right: 14,
+                bottom: 14,
                 child: Column(
                   mainAxisSize: MainAxisSize.min,
                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -131,59 +132,89 @@ class HotelCard extends StatelessWidget {
                     // CITY BADGE
                     Container(
                       padding: const EdgeInsets.symmetric(
-                        horizontal: 6,
-                        vertical: 3,
+                        horizontal: 10,
+                        vertical: 5,
                       ),
                       decoration: BoxDecoration(
-                        color: Colors.white.withOpacity(0.9),
-                        borderRadius: BorderRadius.circular(6),
+                        color: Colors.white.withOpacity(0.92),
+                        borderRadius: BorderRadius.circular(10),
+                        boxShadow: [
+                          BoxShadow(
+                            color: Colors.black.withOpacity(0.04),
+                            blurRadius: 4,
+                            offset: const Offset(0, 2),
+                          ),
+                        ],
                       ),
                       child: Text(
                         cityName,
                         style: const TextStyle(
-                          fontWeight: FontWeight.w600,
-                          fontSize: 11,
+                          fontWeight: FontWeight.w700,
+                          fontSize: 13,
                         ),
                         maxLines: 1,
                         overflow: TextOverflow.ellipsis,
                       ),
                     ),
 
-                    const SizedBox(height: 6),
+                    const SizedBox(height: 10),
 
                     // HOTEL NAME
                     Text(
                       hotel!['name'],
                       style: const TextStyle(
                         color: Colors.white,
-                        fontSize: 15,
+                        fontSize: 18,
                         fontWeight: FontWeight.bold,
                         height: 1.2,
+                        shadows: [
+                          Shadow(
+                            color: Colors.black26,
+                            blurRadius: 4,
+                            offset: Offset(0, 2),
+                          ),
+                        ],
                       ),
                       maxLines: 1,
                       overflow: TextOverflow.ellipsis,
                     ),
 
-                    const SizedBox(height: 4),
+                    const SizedBox(height: 8),
 
                     // STARS + PRICE
                     Row(
                       children: [
-                        Text(
-                          "$stars ★",
-                          style: const TextStyle(
-                            color: Colors.amber,
-                            fontWeight: FontWeight.bold,
-                            fontSize: 13,
+                        Container(
+                          padding: const EdgeInsets.symmetric(
+                              horizontal: 8, vertical: 3),
+                          decoration: BoxDecoration(
+                            color: Colors.white.withOpacity(0.85),
+                            borderRadius: BorderRadius.circular(8),
+                          ),
+                          child: Text(
+                            "$stars ★",
+                            style: const TextStyle(
+                              color: Colors.amber,
+                              fontWeight: FontWeight.bold,
+                              fontSize: 14,
+                            ),
                           ),
                         ),
-                        const SizedBox(width: 10),
-                        Text(
-                          "£$price",
-                          style: const TextStyle(
-                            color: Colors.white,
-                            fontSize: 14,
-                            fontWeight: FontWeight.w600,
+                        const SizedBox(width: 12),
+                        Container(
+                          padding: const EdgeInsets.symmetric(
+                              horizontal: 10, vertical: 3),
+                          decoration: BoxDecoration(
+                            color: Colors.white.withOpacity(0.85),
+                            borderRadius: BorderRadius.circular(8),
+                          ),
+                          child: Text(
+                            "£$price",
+                            style: const TextStyle(
+                              color: Colors.black87,
+                              fontSize: 15,
+                              fontWeight: FontWeight.w700,
+                            ),
                           ),
                         ),
                       ],
@@ -191,12 +222,12 @@ class HotelCard extends StatelessWidget {
 
                     // OPTIONAL DISTANCE
                     if (userLocation != null) ...[
-                      const SizedBox(height: 3),
+                      const SizedBox(height: 6),
                       Text(
                         _distanceText(),
                         style: TextStyle(
-                          color: Colors.white.withOpacity(0.9),
-                          fontSize: 11,
+                          color: Colors.white.withOpacity(0.92),
+                          fontSize: 12,
                         ),
                       ),
                     ],
