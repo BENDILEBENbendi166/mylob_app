@@ -114,7 +114,7 @@ class _HomeScreenState extends State<HomeScreen> {
         backgroundColor: kBackgroundColor,
         iconColor: kIconColor,
       ),
-      drawer: const CustomDrawer(),
+      // Drawer removed for cleaner HomeScreen
       body: SingleChildScrollView(
         physics: const BouncingScrollPhysics(),
         child: Column(
@@ -124,14 +124,17 @@ class _HomeScreenState extends State<HomeScreen> {
               featuredCity: featuredCity,
               isLoading: isLoading,
             ),
-            const SizedBox(height: 60),
+            const SizedBox(height: 32),
 
             // 2. CitySpotlightCarousel - Horizontal carousel of cities (MORE SPACE)
-            CitySpotlightCarousel(
-              cities: cities,
-              isLoading: isLoading,
+            SizedBox(
+              height: 200, // Increased height for carousel
+              child: CitySpotlightCarousel(
+                cities: cities,
+                isLoading: isLoading,
+              ),
             ),
-            const SizedBox(height: 60),
+            const SizedBox(height: 32),
 
             // 3. DealOfTheDay - Highlight best deal
             DealOfTheDay(
@@ -139,17 +142,17 @@ class _HomeScreenState extends State<HomeScreen> {
               hotel: topDealHotel,
               isLoading: isLoading,
             ),
-            const SizedBox(height: 48),
+            const SizedBox(height: 24),
 
             // 4. LastMinuteDealsSection - List of urgent deals
             LastMinuteDealsSection(
               lastMinuteDeals: lastMinuteDeals,
               isLoading: isLoading,
             ),
-            const SizedBox(height: 48),
+            const SizedBox(height: 24),
 
             const WhySection(),
-            const SizedBox(height: 48),
+            const SizedBox(height: 24),
 
             // 5. RecommendedHotelsSection - Top-rated hotels (REDUCED SPACE)
             RecommendedHotelsSection(
@@ -157,7 +160,7 @@ class _HomeScreenState extends State<HomeScreen> {
               cities: cities,
               isLoading: isLoading,
             ),
-            const SizedBox(height: 40),
+            const SizedBox(height: 20),
 
             // Original HomeDealsSection - kept for backward compatibility
             HomeDealsSection(
@@ -167,7 +170,7 @@ class _HomeScreenState extends State<HomeScreen> {
               isLoading: isLoading,
             ),
 
-            const SizedBox(height: 60),
+            const SizedBox(height: 32),
 
             const FooterScreen(),
           ],

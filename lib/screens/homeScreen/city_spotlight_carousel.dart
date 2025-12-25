@@ -52,8 +52,12 @@ class CitySpotlightCarousel extends StatelessWidget {
     return CarouselSlider.builder(
       itemCount: cities.length,
       options: CarouselOptions(
-        height: r.isMobile ? 200 : 220,
-        viewportFraction: r.isMobile ? 0.85 : r.isTablet ? 0.45 : 0.3,
+        height: r.isMobile ? 220 : 260, // Increased height for carousel
+        viewportFraction: r.isMobile
+            ? 0.8
+            : r.isTablet
+                ? 0.42
+                : 0.28, // Slightly reduced fraction for larger cards
         enlargeCenterPage: true,
         autoPlay: true,
         autoPlayInterval: const Duration(seconds: 3),
@@ -71,7 +75,11 @@ class CitySpotlightCarousel extends StatelessWidget {
       itemCount: 3,
       options: CarouselOptions(
         height: r.isMobile ? 200 : 220,
-        viewportFraction: r.isMobile ? 0.85 : r.isTablet ? 0.45 : 0.3,
+        viewportFraction: r.isMobile
+            ? 0.85
+            : r.isTablet
+                ? 0.45
+                : 0.3,
         enlargeCenterPage: true,
       ),
       itemBuilder: (context, index, realIndex) {

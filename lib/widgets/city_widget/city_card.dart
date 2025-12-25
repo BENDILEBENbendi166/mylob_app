@@ -35,7 +35,7 @@ class CityCard extends StatelessWidget {
                 borderRadius:
                     const BorderRadius.vertical(top: Radius.circular(12)),
                 child: SizedBox(
-                  height: 120,
+                  height: 140, // Increased from 120 for better visual impact
                   child: isSkeleton
                       ? Container(
                           color: Colors.grey[300],
@@ -49,8 +49,9 @@ class CityCard extends StatelessWidget {
 
               // ✅ NAME + ATTRACTIONS - constrained height with tighter spacing
               Padding(
-                padding:
-                    const EdgeInsets.symmetric(horizontal: 12.0, vertical: 4.0),
+                padding: const EdgeInsets.symmetric(
+                    horizontal: 8.0,
+                    vertical: 2.0), // Reduced padding for more space
                 child: isSkeleton
                     ? Container(
                         height: 18,

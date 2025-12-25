@@ -18,6 +18,7 @@ class ProfileScreen extends StatelessWidget {
         title: const Text('My Profile'),
         centerTitle: true,
       ),
+      drawer: const CustomDrawer(), // Add drawer for user-centric navigation
       body: SingleChildScrollView(
         padding: const EdgeInsets.all(16),
         child: Column(

@@ -37,7 +37,7 @@ class CustomNavBar extends StatelessWidget implements PreferredSizeWidget {
       ),
       elevation: 0,
       title: InkWell(
-        onTap: () => Navigator.pushNamed(context, '/'),
+        onTap: () => context.go('/'),
         child: const Text(
           'Lobideyim',
           style: TextStyle(
@@ -52,15 +52,15 @@ class CustomNavBar extends StatelessWidget implements PreferredSizeWidget {
               const _LanguageToggle(),
               _TopAction(
                 'Save Your Property',
-                onPressed: () => Navigator.pushNamed(context, '/property'),
+                onPressed: () => context.go('/property'),
               ),
               _TopAction(
                 'Sign Up',
-                onPressed: () => Navigator.pushNamed(context, '/signup'),
+                onPressed: () => context.go('/signup'),
               ),
               _TopAction(
                 'Log In',
-                onPressed: () => Navigator.pushNamed(context, '/login'),
+                onPressed: () => context.go('/login'),
               ),
               const SizedBox(width: 12),
             ]
