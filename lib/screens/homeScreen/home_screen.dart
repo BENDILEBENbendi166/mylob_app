@@ -126,12 +126,9 @@ class _HomeScreenState extends State<HomeScreen> {
             const SizedBox(height: 32),
 
             // 2. CitySpotlightCarousel - Horizontal carousel of cities (MORE SPACE)
-            SizedBox(
-              height: 200, // Increased height for carousel
-              child: CitySpotlightCarousel(
-                cities: cities,
-                isLoading: isLoading,
-              ),
+            CitySpotlightCarousel(
+              cities: cities,
+              isLoading: isLoading,
             ),
             const SizedBox(height: 32),
 
