@@ -41,12 +41,11 @@ class CityCard extends StatelessWidget {
             mainAxisSize: MainAxisSize.min,
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
-              // IMAGE
-              ClipRRect(
-                borderRadius:
-                    const BorderRadius.vertical(top: Radius.circular(18)),
-                child: SizedBox(
-                  height: 110,
+              // IMAGE (adaptive)
+              Expanded(
+                child: ClipRRect(
+                  borderRadius:
+                      const BorderRadius.vertical(top: Radius.circular(12)),
                   child: isSkeleton
                       ? Container(color: Colors.grey[300])
                       : safeAssetImage(
@@ -56,8 +55,8 @@ class CityCard extends StatelessWidget {
                 ),
               ),
               Padding(
-                padding: const EdgeInsets.symmetric(
-                    horizontal: 14.0, vertical: 10.0),
+                padding:
+                    const EdgeInsets.symmetric(horizontal: 8.0, vertical: 2.0),
                 child: isSkeleton
                     ? Container(
                         height: 18,
@@ -65,22 +64,24 @@ class CityCard extends StatelessWidget {
                         color: Colors.grey[300],
                       )
                     : Column(
+                        mainAxisSize: MainAxisSize.min,
                         crossAxisAlignment: CrossAxisAlignment.start,
+                        mainAxisAlignment: MainAxisAlignment.center,
                         children: [
                           Text(
                             city?['name'] ?? '',
                             style: const TextStyle(
                               fontWeight: FontWeight.bold,
-                              fontSize: 16,
+                              fontSize: 14,
                             ),
                             maxLines: 1,
                             overflow: TextOverflow.ellipsis,
                           ),
-                          const SizedBox(height: 4),
+                          const SizedBox(height: 1),
                           Text(
                             "${attractions.length} attractions",
                             style: TextStyle(
-                              fontSize: 13,
+                              fontSize: 11,
                               color: Colors.grey[600],
                             ),
                             maxLines: 1,

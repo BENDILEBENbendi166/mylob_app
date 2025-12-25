@@ -26,26 +26,24 @@ class _CityScreenState extends State<CityScreen> {
   @override
   void initState() {
     super.initState();
-    _listenToStreams();
-  }
-
-  void _listenToStreams() {
-    // ✅ Listen to hotels in this city
-    _hotelSub = HotelService.streamHotelsByCity(widget.cityId).listen((hotelList) {
-      if (mounted) {
-        setState(() {
-          hotels = hotelList;
-        });
-      }
-    });
-
-    // ✅ Listen to the specific city
     _citySub = CityService.streamCityById(widget.cityId).listen((cityData) {
       if (mounted) {
         setState(() {
           city = cityData;
           isLoading = false;
         });
+        // Now that we have the city name, start listening for hotels in this city
+        _hotelSub?.cancel();
+        if (cityData != null && cityData['name'] != null) {
+          _hotelSub = HotelService.streamHotelsByCity(cityData['name'])
+              .listen((hotelList) {
+            if (mounted) {
+              setState(() {
+                hotels = hotelList;
+              });
+            }
+          });
+        }
       }
     });
   }
@@ -78,7 +76,7 @@ class _CityScreenState extends State<CityScreen> {
               city: city,
               isLoading: isLoading,
             ),
-            
+
             SizedBox(height: r.spacing * 2),
 
             // 2. PopularAttractionsGrid
@@ -86,7 +84,7 @@ class _CityScreenState extends State<CityScreen> {
               attractions: city?['popularAttractions'] ?? [],
               isLoading: isLoading,
             ),
-            
+
             SizedBox(height: r.spacing * 2),
 
             // 3. HotelsInCityList
@@ -95,7 +93,7 @@ class _CityScreenState extends State<CityScreen> {
               city: city,
               isLoading: isLoading,
             ),
-            
+
             SizedBox(height: r.spacing * 2),
           ],
         ),
