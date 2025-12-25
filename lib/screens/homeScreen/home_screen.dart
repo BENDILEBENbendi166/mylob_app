@@ -123,7 +123,7 @@ class _HomeScreenState extends State<HomeScreen> {
               featuredCity: featuredCity,
               isLoading: isLoading,
             ),
-            const SizedBox(height: 12),
+            const SizedBox(height: 32),
 
             // 2. CitySpotlightCarousel - Horizontal carousel of cities (MORE SPACE)
             SizedBox(
@@ -133,7 +133,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 isLoading: isLoading,
               ),
             ),
-            const SizedBox(height: 12),
+            const SizedBox(height: 32),
 
             // 3. DealOfTheDay - Highlight best deal
             DealOfTheDay(
@@ -141,17 +141,17 @@ class _HomeScreenState extends State<HomeScreen> {
               hotel: topDealHotel,
               isLoading: isLoading,
             ),
-            const SizedBox(height: 12),
+            const SizedBox(height: 32),
 
             // 4. LastMinuteDealsSection - List of urgent deals
             LastMinuteDealsSection(
               lastMinuteDeals: lastMinuteDeals,
               isLoading: isLoading,
             ),
-            const SizedBox(height: 12),
+            const SizedBox(height: 32),
 
             const WhySection(),
-            const SizedBox(height: 12),
+            const SizedBox(height: 32),
 
             // 5. RecommendedHotelsSection - Top-rated hotels (REDUCED SPACE)
             RecommendedHotelsSection(
@@ -159,7 +159,7 @@ class _HomeScreenState extends State<HomeScreen> {
               cities: cities,
               isLoading: isLoading,
             ),
-            const SizedBox(height: 12),
+            const SizedBox(height: 32),
 
             // Original HomeDealsSection - kept for backward compatibility
             HomeDealsSection(
@@ -169,7 +169,7 @@ class _HomeScreenState extends State<HomeScreen> {
               isLoading: isLoading,
             ),
 
-            const SizedBox(height: 12),
+            const SizedBox(height: 32),
 
             const FooterScreen(),
           ],
